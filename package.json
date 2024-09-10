@@ -1,0 +1,31 @@
+{
+  "name": "final-project-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "Kamila Lohvynenko <kamila.lohvynenko@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "eslint": "^9.10.0",
+    "globals": "^15.9.0",
+    "nodemon": "^3.1.4",
+    "pino-pretty": "^11.2.2"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.20.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "pino-http": "^10.3.0"
+  }
+}
