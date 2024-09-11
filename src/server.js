@@ -5,6 +5,9 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
+import authRouter from './routers/auth.js';
+import waterRouter from './routers/water.js';
+
 import { notFoundMiddleware } from './middlewares/notFoundHandler.js';
 import { errorMiddleware } from './middlewares/errorHandler.js';
 
@@ -26,6 +29,9 @@ export const setupServer = () => {
   app.get('/', (req, res) => {
     res.send('Hello!');
   });
+
+  app.use('/users', authRouter);
+  app.use('/water', waterRouter);
 
   app.use(notFoundMiddleware);
   app.use(errorMiddleware);
