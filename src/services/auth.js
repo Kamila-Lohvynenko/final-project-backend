@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 import { randomBytes } from 'crypto';
 import {FIFTEEN_MINUTES, THIRTY_DAYS} from '../constans/index.js';
-import {SessionsCollection} from '../db/models/session.js'
+import {SessionsCollection} from '../'
 
 
 export const registerUser = async (payload) => {
@@ -37,7 +37,7 @@ export const loginUser = async (payload) => {
     const accessToken = randomBytes(30).toString('base64');
     const refreshToken = randomBytes(30).toString('base64');
 
-    return await SessionCollections.create({
+    return await SessionsCollection.create({
         userId: user._id,
         accessToken,
         refreshToken,
