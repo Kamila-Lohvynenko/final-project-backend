@@ -1,5 +1,6 @@
-import { loginUser, logoutUser, registerUser } from "../services/auth.js"
-import {THIRTY_DAYS} from '../constans/index.js'
+import { loginUser, logoutUser, refreshUsersSession, registerUser } from "../services/auth.js"
+import { THIRTY_DAYS } from '../constans/index.js'
+import { setSessionCookies } from "../utils/setSessionCookies.js";
 
 export const registerUserController = async (req, res) => {
     const user = await registerUser(req.body);
@@ -42,6 +43,19 @@ export const logoutUserController = async (req, res) => {
     res.status(204).send();
 };
 
-export const refreshUserSessionController = async (req, res, next) => {
-    
-}
+export const refreshUserSessionController = async (req, res) => {
+    const session = await refreshUsersSession({
+        sessionId: req.cookies.sessionId,
+        refreshToken: req.cookies.refreshToken,
+    });
+
+    setSessionCookies(res, session);
+
+    res.json({
+        status: 200,
+        message: 'Successfully refreshed a session!',
+        data: {
+            accessToken: session.accessToken,
+        },
+    });
+};

@@ -1,4 +1,4 @@
-import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
+import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constans/index.js';
 import crypto from 'node:crypto';
 
 export const createSession = () => {
