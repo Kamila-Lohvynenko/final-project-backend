@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 import { randomBytes } from 'crypto';
 import {FIFTEEN_MINUTES, THIRTY_DAYS} from '../constans/index.js';
-import {SessionsCollection} from '../'
+import {SessionsCollection} from '../db/models/session.js'
 
 
 export const registerUser = async (payload) => {
@@ -32,7 +32,7 @@ export const loginUser = async (payload) => {
         throw createHttpError(401, 'Unauthorized');
     }
 
-    await SessionCollections.deleteOne({userId: user._id});
+    await SessionsCollection.deleteOne({userId: user._id});
 
     const accessToken = randomBytes(30).toString('base64');
     const refreshToken = randomBytes(30).toString('base64');
