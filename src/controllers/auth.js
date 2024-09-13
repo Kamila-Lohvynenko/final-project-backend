@@ -87,3 +87,7 @@ export const updateDataUserController = async (req, res,) => {
     });
 
 };
+
+export const updateAvatarUserController = async (req, res,) => {
+    
+} 

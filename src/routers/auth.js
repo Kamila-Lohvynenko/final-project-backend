@@ -18,7 +18,9 @@ router.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 router.get('/data', authenticate, ctrlWrapper(getUserCurrentUserController));
 
-router.patch('/updateData', jsonParser, authenticate, ctrlWrapper(updateDataUserController) );
+router.patch('/updateData', jsonParser, authenticate, ctrlWrapper(updateDataUserController));
+
+router.patch('/updateAvatar', authenticate, )
 
 
 export default router;
