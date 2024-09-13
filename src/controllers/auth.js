@@ -30,7 +30,6 @@ export const loginUserController = async (req, res) => {
         data:{
             accsessToken: session.accessToken,
             user,
-        
         },
     });
 };
