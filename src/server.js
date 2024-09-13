@@ -11,6 +11,8 @@ import waterRouter from './routers/water.js';
 import { notFoundMiddleware } from './middlewares/notFoundHandler.js';
 import { errorMiddleware } from './middlewares/errorHandler.js';
 
+import { UPLOAD_DIR } from './constans/index.js';
+
 export const setupServer = () => {
   const app = express();
 
@@ -29,6 +31,8 @@ export const setupServer = () => {
   app.get('/', (req, res) => {
     res.send('Hello!');
   });
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use('/users', authRouter);
   app.use('/water', waterRouter);
