@@ -56,7 +56,7 @@ export const deleteWaterController = async (req, res, next) => {
     if (!deletedWater) {
         next (createHttpError(404, 'Water not found!'));
     }
-    res.status(204).end();
+    res.status(204).send();
 };
 
 export const getWaterByDayController = async (req, res, next) => {
@@ -66,9 +66,13 @@ export const getWaterByDayController = async (req, res, next) => {
  if (!date) {
     throw (createHttpError(404, 'Date is required!'));
   }
-  const totalWater = await getWaterByDay(userId, date); 
+  const result = await getWaterByDay(userId, date); 
 
- res.status(200).json({ totalWater });
+ res.status(200).json({
+  status: 200,
+  message: 'Successfully update the water!',
+  data: result,
+ });
 };
 
 export const getWaterByMonthController = async (req, res, next) => {
@@ -79,7 +83,11 @@ export const getWaterByMonthController = async (req, res, next) => {
     throw (createHttpError(404, 'Month is required!'));
   }
 
-  const totalWater = await getWaterByMonth( userId, month); 
+  const result = await getWaterByMonth( userId, month); 
 
-  res.status(200).json({ totalWater });
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully update the water!',
+    data: result,
+   });
 };
