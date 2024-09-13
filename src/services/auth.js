@@ -96,3 +96,22 @@ export const getCurrentUser = async (userId) => {
         dailyNorma: dailyNorma || 1.5,
     };
 };
+
+export const updateDataUser = async (userId, payload, options = {},) => {
+    const result = await UsersCollection.findOneAndUpdate(
+        { _id: userId },
+        payload,
+        {
+            new: true,
+            includeResultMetadata: true,
+            ...options,
+        },
+    )
+    if (!result || !result.value) return null;
+
+    return {
+        user: result.value,
+        isNew: Boolean(result?.lastErrorObject?.upserted),
+    };
+   
+};

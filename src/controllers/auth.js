@@ -1,6 +1,7 @@
-import { getCurrentUser, loginUser, logoutUser, refreshUsersSession, registerUser } from "../services/auth.js"
+import { getCurrentUser, loginUser, logoutUser, refreshUsersSession, registerUser, updateDataUser } from "../services/auth.js"
 import { THIRTY_DAYS } from '../constans/index.js'
 import { setSessionCookies } from "../utils/setSessionCookies.js";
+import createHttpError from "http-errors";
 
 export const registerUserController = async (req, res) => {
     const user = await registerUser(req.body);
@@ -61,7 +62,7 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const getUserCurrentUserController = async (req, res,) => {
-    
+
     const  userData = await getCurrentUser(req.user._id);
 
     res.status(200).json({
@@ -69,4 +70,20 @@ export const getUserCurrentUserController = async (req, res,) => {
         message: 'Successfully retrieved user information',
         data: userData,
     });
+};
+
+export const updateDataUserController = async (req, res,) => {
+    const userId = req.user._id;
+    const result = await updateDataUser(userId, req.body);
+
+    if (!result) {
+        throw createHttpError(404, 'User not found');
+    }
+
+    res.json({
+        status: 200,
+        message: 'Successfully patched a user!',
+        data: result.user,
+    });
+
 };

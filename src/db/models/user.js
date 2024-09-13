@@ -6,7 +6,11 @@ const usersSchema = new Schema(
     name: {type: String, default: 'User'},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    dailyNorma: {type: Number, default: 1.5},
+    gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
+    weight: { type: Number },
+    activeSportTime: {type: Number},
+    dailyNorma: { type: Number, default: 1.5 },
+    avatar: {type: String},
   },
   { timestamps: true, versionKey: false },
 );
