@@ -2,6 +2,7 @@ import { getCurrentUser, loginUser, logoutUser, refreshUsersSession, registerUse
 import { THIRTY_DAYS } from '../constans/index.js'
 import { setSessionCookies } from "../utils/setSessionCookies.js";
 import createHttpError from "http-errors";
+import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
 
 export const registerUserController = async (req, res) => {
     const user = await registerUser(req.body);
@@ -76,9 +77,15 @@ export const getUserCurrentUserController = async (req, res,) => {
 export const updateDataUserController = async (req, res,) => {
     const userId = req.user._id;
     const avatar = req.file;
+
+    let avatarUrl;
+
+    if (avatar) {
+        avatarUrl = await saveFileToUploadDir(avatar);
+    }
     const payload = {
         ...req.body,
-        avatar
+        avatar: avatarUrl,
     }
     const result = await updateDataUser(userId, payload);
 
