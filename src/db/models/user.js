@@ -2,9 +2,11 @@
 import { model, Schema } from 'mongoose';
 
 const usersSchema = new Schema(
-    {
+  {
+    name: {type: String, default: 'User'},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    dailyNorma: {type: Number, default: 1.5},
   },
   { timestamps: true, versionKey: false },
 );
