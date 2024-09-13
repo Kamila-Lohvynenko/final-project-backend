@@ -37,8 +37,8 @@ export const loginUser = async (payload) => {
 
     const accessToken = randomBytes(30).toString('base64');
     const refreshToken = randomBytes(30).toString('base64');
-
-    return await SessionsCollection.create({
+    
+    const session = await SessionsCollection.create({
         userId: user._id,
         accessToken,
         refreshToken,
@@ -46,6 +46,20 @@ export const loginUser = async (payload) => {
         refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
 
     });
+
+    return {
+        session,
+        user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            gender: user.gender,
+            weight: user.weight,
+            activeSportTime: user.activeSportTime,
+            dailyNorma: user.dailyNorma,
+            avatar: user.avatar,
+        }
+    }
 };
 
 export const logoutUser = async (sessionId) => {
@@ -78,3 +92,41 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
         ...newSession
     });
 };
+
+
+export const getCurrentUser = async (userId) => {
+    const user = await UsersCollection.findById(userId).exec();
+
+    if (!user) {
+        throw createHttpError(404, 'User not found');
+    }
+
+    const { _id, name, email, dailyNorma } = user;
+
+    return {
+        _id,
+        name: name || 'User',
+        email,
+        dailyNorma: dailyNorma || 1.5,
+    };
+};
+
+export const updateDataUser = async (userId, payload, options = {},) => {
+    const result = await UsersCollection.findOneAndUpdate(
+        { _id: userId },
+        payload,
+        {
+            new: true,
+            includeResultMetadata: true,
+            ...options,
+        },
+    )
+    if (!result || !result.value) return null;
+
+    return {
+        user: result.value,
+        isNew: Boolean(result?.lastErrorObject?.upserted),
+    };
+   
+};
+
