@@ -78,3 +78,21 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
         ...newSession
     });
 };
+
+
+export const getCurrentUser = async (userId) => {
+    const user = await UsersCollection.findById(userId).exec();
+
+    if (!user) {
+        throw createHttpError(404, 'User not found');
+    }
+
+    const { _id, name, email, dailyNorma } = user;
+
+    return {
+        _id,
+        name: name || 'User',
+        email,
+        dailyNorma: dailyNorma || 1.5,
+    };
+};

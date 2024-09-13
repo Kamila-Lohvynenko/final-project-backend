@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, refreshUsersSession, registerUser } from "../services/auth.js"
+import { getCurrentUser, loginUser, logoutUser, refreshUsersSession, registerUser } from "../services/auth.js"
 import { THIRTY_DAYS } from '../constans/index.js'
 import { setSessionCookies } from "../utils/setSessionCookies.js";
 
@@ -57,5 +57,16 @@ export const refreshUserSessionController = async (req, res) => {
         data: {
             accessToken: session.accessToken,
         },
+    });
+};
+
+export const getUserCurrentUserController = async (req, res,) => {
+    
+    const  userData = await getCurrentUser(req.user._id);
+
+    res.status(200).json({
+        status: 200,
+        message: 'Successfully retrieved user information',
+        data: userData,
     });
 };
