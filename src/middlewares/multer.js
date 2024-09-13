@@ -5,5 +5,11 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, TEMP_UPLOAD_DIR);
     },
-    filename: function ()
-})
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now();
+        const sanitizedFilename = file.originalname.replace(/\s+/g, '_'); // Заменяем пробелы на подчеркивания
+        cb(null, `${uniqueSuffix}_${sanitizedFilename}`);
+    },
+});
+
+export const upload = multer({ storage });
