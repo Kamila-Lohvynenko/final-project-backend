@@ -3,8 +3,8 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js'
 import { getUserCurrentUserController, loginUserController, logoutUserController, refreshUserSessionController, registerUserController, updateDataUserController } from '../controllers/auth.js';
- import { authenticate } from '../middlewares/authenticate.js';
-
+import { authenticate } from '../middlewares/authenticate.js';
+import { upload } from '../middlewares/multer.js';
 const router = express.Router();
 const jsonParser = express.json();
 
@@ -20,7 +20,7 @@ router.get('/data', authenticate, ctrlWrapper(getUserCurrentUserController));
 
 router.patch('/updateData', jsonParser, authenticate, ctrlWrapper(updateDataUserController));
 
-router.patch('/updateAvatar', authenticate, )
+router.patch('/updateAvatar', authenticate, upload.single('avatar'), ctrlWrapper(updateDataUserController));
 
 
 export default router;

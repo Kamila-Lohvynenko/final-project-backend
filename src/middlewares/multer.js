@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now();
-        const sanitizedFilename = file.originalname.replace(/\s+/g, '_'); // Заменяем пробелы на подчеркивания
+        const sanitizedFilename = file.originalname.replace(/\s+/g, '_');
         cb(null, `${uniqueSuffix}_${sanitizedFilename}`);
     },
 });
