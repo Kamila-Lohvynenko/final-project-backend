@@ -53,6 +53,11 @@ export const loginUser = async (payload) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            gender: user.gender,
+            weight: user.weight,
+            activeSportTime: user.activeSportTime,
+            dailyNorma: user.dailyNorma,
+            avatar: user.avatar,
         }
     }
 };
