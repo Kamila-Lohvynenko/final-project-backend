@@ -5,23 +5,30 @@ import { addWater,
      getWaterByDay,
      getWaterByMonth} from "../services/water.js";
 
-export const addWaterController = async (req, res, next) => {
-    try {
-
-        const userId = req.user._id;
-        const userData = { ...req.body, userId}; 
-        // console.log('Received data:', userData); 
-        const addedWater = await addWater(userData);
-        // console.log('Added water record:', addedWater);
-        res.status(201).json({
+     export const addWaterController = async (req, res, next) => {
+        try {
+          const userId = req.user._id;
+          const userData = { ...req.body, userId}; 
+      
+          const addedWater = await addWater(userData);
+      
+          if (!addedWater) {
+            return res.status(400).json({
+              status: 400,
+              message: 'Failed to add water record',
+            });
+          }
+      
+          res.status(201).json({
             status: 201,
             message: 'Successfully added water!',
             data: addedWater,
-        }); 
-    } catch (error) {
-        next(error);
-    }
-};
+          }); 
+        } catch (error) {
+          console.error('Error adding water record:', error);
+          next(error);
+        }
+      };
 
 export const editWaterController = async (req, res, next) => {
     const { id } = req.params;
@@ -57,25 +64,22 @@ export const getWaterByDayController = async (req, res, next) => {
  const { date } = req.query;
 
  if (!date) {
-    next (createHttpError(404, 'Date is required!'));
+    throw (createHttpError(404, 'Date is required!'));
   }
   const totalWater = await getWaterByDay(userId, date); 
-  res.status(200).json({ totalWater });
+
+ res.status(200).json({ totalWater });
 };
 
 export const getWaterByMonthController = async (req, res, next) => {
  const userId = req.user._id;
- const { date } = req.query;
+ const { month } = req.query;
 
- if (!date) {
+ if (!month) {
     throw (createHttpError(404, 'Month is required!'));
   }
-//   const monthDate = new Date(date);
 
-  const totalWater = await getWaterByMonth( userId, date); 
+  const totalWater = await getWaterByMonth( userId, month); 
 
-  if (!totalWater.length) {
-    throw createHttpError(404, 'No data found for this month');
-  }
-  res.json({ totalWater });
+  res.status(200).json({ totalWater });
 };
