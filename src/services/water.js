@@ -5,16 +5,6 @@ export const addWater = async (userData) => {
     return waterRecord;
 };
 
-// export const addWater = async (userData) => {
-//   try {
-//     const waterRecord = new WaterCollection(userData);
-//     const savedRecord = await waterRecord.save(); 
-//     return savedRecord; 
-//   } catch (error) {
-//     throw new Error('Error creating water record');
-//   }
-// };
-
 export const editWater = (id, userId, userData) => { 
     return WaterCollection.findOneAndUpdate(
    {_id: id, userId}, 
@@ -36,8 +26,7 @@ export const getWaterByDay = async (userId, day, month, year) => {
       month,
       year
     });
-    const result = records.reduce((total, record) => total + record.amount, 0);
-    return result;
+    return records;
 };
 
 export const getWaterByMonth = async (userId, month, year) => { 
@@ -46,6 +35,5 @@ export const getWaterByMonth = async (userId, month, year) => {
       month,
       year
     });
-    const result = records.reduce((total, record) => total + record.amount, 0);
-    return result;
+    return records;
 }; 
