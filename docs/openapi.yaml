@@ -1,0 +1,24 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Students app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of students app
+tags:
+  - name: Water
+    description: Operations about water.
+  - name: Users
+    description: Auth operations.
+servers:
+  - url: http://localhost:8080
+paths:
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/register/post.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
