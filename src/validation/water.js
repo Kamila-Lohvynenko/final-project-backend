@@ -5,7 +5,7 @@ export const waterRecordValidationSchema = Joi.object({
     'number.min': 'The amount of water must be greater than 50 ml',
     'any.required': 'The amount of water is a required field',
   }),
-  date: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/).required().messages({
+  day: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/).required().messages({
     'string.pattern.base': 'Invalid day format (should be between 01 and 31)',
     'any.required': 'Day is required',
   }),
@@ -26,7 +26,7 @@ export const waterRecordValidationSchema = Joi.object({
 
 export const updateWaterRecordValidationSchema = Joi.object({
   amount: Joi.number().min(0.05),
-  date: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/),
+  day: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/),
   month: Joi.string().pattern(/^(0[1-9]|1[0-2])$/),
   year: Joi.string().pattern(/^\d{4}$/),
   time: Joi.string().pattern(/^([0-1]\d|2[0-3]):([0-5]\d)$/),

@@ -11,7 +11,7 @@ const waterRecordSchema = new Schema({
       required: true,
       min: 0.05    
     },
-    date: {
+    day: {
       type: String,
       required: true,
       validate: {
