@@ -29,20 +29,23 @@ export const deleteWater = (id, userId) => {
     });
 };
 
-export const getWaterByDay = async (userId, date) => { 
+export const getWaterByDay = async (userId, day, month, year) => { 
   const records = await  WaterCollection.find({
       userId,
-      date,
+      day,
+      month,
+      year
     });
-    const totalWater = records.reduce((total, record) => total + record.amount, 0);
-    return totalWater;
+    const result = records.reduce((total, record) => total + record.amount, 0);
+    return result;
 };
 
-export const getWaterByMonth = async (userId, month) => { 
+export const getWaterByMonth = async (userId, month, year) => { 
     const records = await WaterCollection.find({
       userId,
-      month
+      month,
+      year
     });
-    const totalWater = records.reduce((total, record) => total + record.amount, 0);
-    return totalWater;
-};
+    const result = records.reduce((total, record) => total + record.amount, 0);
+    return result;
+}; 
