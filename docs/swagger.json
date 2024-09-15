@@ -264,6 +264,99 @@
           }
         }
       }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Refresh user session",
+        "operationId": "refreshUserSession",
+        "description": "Refreshes the user session by using the provided session ID and refresh token stored in cookies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "schema": {
+              "type": "string",
+              "description": "The session ID stored in the cookies."
+            },
+            "required": true
+          },
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "schema": {
+              "type": "string",
+              "description": "The refresh token stored in the cookies."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "description": "The new access token for the refreshed session",
+                          "type": "string",
+                          "example": "newAccessTokenValue"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/data": {
+      "post": {
+        "$ref": null
+      }
+    },
+    "/users//updateData": {
+      "patch": {
+        "$ref": null
+      }
+    },
+    "/users/updateAvatar": {
+      "patch": {
+        "$ref": null
+      }
     }
   },
   "components": {
