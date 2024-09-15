@@ -17,6 +17,9 @@ paths:
   /users/register:
     post:
       $ref: ../swagger/paths/users/register/post.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/login/post.yaml
 components:
   securitySchemes:
     bearerAuth:

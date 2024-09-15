@@ -22,19 +22,6 @@ requestBody:
             description: "User's password"
             type: string
             example: '123123'
-          name:
-            description: "User's name (optional, defaults to 'User')"
-            type: string
-            example: 'Masha'
-          gender:
-            description: "User's gender (optional, defaults to 'woman')"
-            type: string
-            enum: ['woman', 'man']
-            example: 'woman'
-          dailyNorma:
-            description: "User's dialy water consumption in liters(optional, defaults '1.5')"
-            type: number
-            example: 1.5
 responses:
   '201':
     description: User successfully registered
