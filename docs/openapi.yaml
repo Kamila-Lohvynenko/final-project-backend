@@ -20,6 +20,9 @@ paths:
   /users/login:
     post:
       $ref: ../swagger/paths/users/login/post.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/users/logout/post.yaml
 components:
   securitySchemes:
     bearerAuth:
