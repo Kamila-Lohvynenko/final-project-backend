@@ -28,7 +28,7 @@ paths:
       $ref: ../swagger/paths/users/refresh/post.yaml
   /users/data:
     get:
-      $ref:
+      $ref: ../swagger/paths/users/get.yaml
   /users//updateData:
     patch:
       $ref:
