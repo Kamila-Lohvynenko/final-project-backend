@@ -1,0 +1,67 @@
+tags:
+  - Water
+summary: 'Add a new water'
+operationId: addWater
+description: 'Add a water with data'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - amount
+          - day
+          - month
+          - year
+          - time
+        properties:
+          amount:
+            description: 'The amount of water consumed (in liters).'
+            type: string
+            example: '1'
+          day:
+            description: 'The day of the water record (in format DD).'
+            type: string
+            example: '05'
+          month:
+            description: 'The month of the water record (in format MM).'
+            type: string
+            example: '09'
+          year:
+            description: 'The year of the water record (in format YYYY).'
+            type: string
+            example: '2024'
+          time:
+            description: 'The time of the water record (in format HH:mm).'
+            type: string
+            example: '12:30'
+  description: 'Details to create a water.'
+responses:
+  '201':
+    description: 'Successful operation'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully added the water!'
+            data:
+              type: object
+              $ref: ../../components/schemas/water/water.yaml
+  '400':
+    $ref: ../../components/responses/water/400.yaml
+  '401':
+    $ref: ../../components/responses/water/401.yaml
+  '500':
+    $ref: ../../components/responses/water/500.yaml

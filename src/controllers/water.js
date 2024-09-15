@@ -21,7 +21,7 @@ export const addWaterController = async (req, res, next) => {
  
      res.status(201).json({
        status: 201,
-       message: 'Successfully added water!',
+       message: 'Successfully added the water!',
        data: addedWater,
      }); 
    } catch (error) {
@@ -36,7 +36,7 @@ export const editWaterController = async (req, res, next) => {
     const result = await editWater(id, userId, {...req.body}); 
 
     if (result === null) {
-        next(createHttpError(404, 'Not found to update'));
+        next(createHttpError(404, 'Water not found!'));
     }
 
     res.status(200).json({
