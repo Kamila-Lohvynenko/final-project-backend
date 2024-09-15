@@ -8,12 +8,15 @@ info:
   description: This is a documentation of students app
 tags:
   - name: Water
-    description: Operations about users.
+    description: Operations about water.
   - name: Users
     description: Auth operations.
 servers:
   - url: http://localhost:8080
 paths:
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/register/post.yaml
 components:
   securitySchemes:
     bearerAuth:
