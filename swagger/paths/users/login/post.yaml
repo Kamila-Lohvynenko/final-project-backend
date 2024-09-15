@@ -1,0 +1,83 @@
+tags:
+  - Users
+summary: User login
+operationId: loginUser
+description: 'Login an existing user'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            format: email
+            example: 'user@gmail.com'
+          password:
+            description: "User's password"
+            type: string
+            example: '123123'
+responses:
+  '200':
+    description: User successfully logged in
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - description: "User data with default values (if the user hasn't changed their profile)"
+              type: object
+              required:
+                - status
+                - message
+                - data
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: Succesfully loged in an user!
+                data:
+                  type: object
+                  required:
+                    - accessToken
+                    - user
+                  properties:
+                    accessToken:
+                      type: string
+                      example: 'YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO'
+                    user:
+                      $ref: '../../../components/schemas/users/registerUser.yaml'
+            - description: 'User data with updated profile information'
+              type: object
+              required:
+                - status
+                - message
+                - data
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: Succesfully loged in an user!
+                data:
+                  type: object
+                  required:
+                    - accessToken
+                    - user
+                  properties:
+                    accessToken:
+                      type: string
+                      example: 'YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO'
+                    user:
+                      $ref: '../../../components/schemas/users/patchUser.yaml'
+  '401':
+    $ref: '../../../components/responses/users/401.yaml'
+  '404':
+    $ref: '../../../components/responses/users/404.yaml'

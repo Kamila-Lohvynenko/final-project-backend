@@ -17,19 +17,461 @@
   "tags": [
     {
       "name": "Water",
-      "description": "Operations about users."
+      "description": "Operations about water."
     },
     {
       "name": "Users",
       "description": "Auth operations."
     }
   ],
-  "paths": null,
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User registration",
+        "operationId": "registerUser",
+        "description": "Register a new user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "123123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/registerUser"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User login",
+        "operationId": "loginUser",
+        "description": "Login an existing user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "123123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "description": "User data with default values (if the user hasn't changed their profile)",
+                      "type": "object",
+                      "required": [
+                        "status",
+                        "message",
+                        "data"
+                      ],
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Succesfully loged in an user!"
+                        },
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "accessToken",
+                            "user"
+                          ],
+                          "properties": {
+                            "accessToken": {
+                              "type": "string",
+                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO"
+                            },
+                            "user": {
+                              "$ref": "#/components/schemas/registerUser"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "description": "User data with updated profile information",
+                      "type": "object",
+                      "required": [
+                        "status",
+                        "message",
+                        "data"
+                      ],
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Succesfully loged in an user!"
+                        },
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "accessToken",
+                            "user"
+                          ],
+                          "properties": {
+                            "accessToken": {
+                              "type": "string",
+                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO"
+                            },
+                            "user": {
+                              "$ref": "#/components/schemas/patchUser"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User logout",
+        "operationId": "logoutUser",
+        "description": "Logs out the current user by deleting the session",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully logged out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged out"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "registerUser": {
+        "type": "object",
+        "required": [
+          "_id",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "66e69d630a8a440495bed3cc"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "format": "email",
+            "example": "user@gmail.com"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "example": "123123"
+          },
+          "name": {
+            "description": "User's name (optional, defaults to 'User')",
+            "type": "string",
+            "example": "Masha"
+          },
+          "gender": {
+            "description": "User's gender (optional, defaults to 'woman')",
+            "type": "string",
+            "enum": [
+              "woman",
+              "man"
+            ],
+            "example": "woman"
+          },
+          "dailyNorma": {
+            "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+            "type": "number",
+            "example": 1.5
+          }
+        }
+      },
+      "patchUser": {
+        "type": "object",
+        "required": [
+          "_id",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "66e69d630a8a440495bed3cc"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "format": "email",
+            "example": "user@gmail.com"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "example": "123123"
+          },
+          "name": {
+            "description": "User's name (optional, defaults to 'User')",
+            "type": "string",
+            "example": "Masha"
+          },
+          "gender": {
+            "description": "User's gender (optional, defaults to 'woman')",
+            "type": "string",
+            "enum": [
+              "woman",
+              "man"
+            ],
+            "example": "woman"
+          },
+          "dailyNorma": {
+            "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+            "type": "number",
+            "example": 1.5
+          },
+          "weight": {
+            "description": "User's weight in kilograms",
+            "type": "number",
+            "example": 65
+          },
+          "activeSportTime": {
+            "description": "User's  time of active participation in sports",
+            "type": "number",
+            "example": 5
+          },
+          "avatar": {
+            "description": " Link to user photo",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "User not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Email already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Email in use"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

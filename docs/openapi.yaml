@@ -17,6 +17,25 @@ paths:
   /users/register:
     post:
       $ref: ../swagger/paths/users/register/post.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/login/post.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/users/logout/post.yaml
+  /users/refresh:
+    post:
+      $ref: ../swagger/paths/users/refresh/post.yaml
+  /users/data:
+    post:
+      $ref:
+  /users//updateData:
+    patch:
+      $ref:
+  /users/updateAvatar:
+    patch:
+      $ref:
+
 components:
   securitySchemes:
     bearerAuth:
