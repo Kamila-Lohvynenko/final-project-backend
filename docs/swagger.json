@@ -437,14 +437,178 @@
         }
       }
     },
-    "/users//updateData": {
+    "/users/updateData": {
       "patch": {
-        "$ref": null
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update date User",
+        "operationId": "updateUser",
+        "description": "Update user information. Data is taken from the token, so no user ID is needed in the parameters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@gmail.com"
+                  },
+                  "name": {
+                    "description": "User's name (optional, defaults to 'User')",
+                    "type": "string",
+                    "example": "Masha"
+                  },
+                  "gender": {
+                    "description": "User's gender (optional, defaults to 'woman')",
+                    "type": "string",
+                    "enum": [
+                      "woman",
+                      "man"
+                    ],
+                    "example": "woman"
+                  },
+                  "dailyNorma": {
+                    "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+                    "type": "number",
+                    "example": 1.5
+                  },
+                  "weight": {
+                    "description": "User's weight in kilograms",
+                    "type": "number",
+                    "example": 65
+                  },
+                  "activeSportTime": {
+                    "description": "User's  time of active participation in sports",
+                    "type": "number",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/patchUser"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
       }
     },
     "/users/updateAvatar": {
       "patch": {
-        "$ref": null
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User's avatar",
+        "operationId": "updateUserAvatar",
+        "description": "Update user avatar. Data is taken from the token, so no user ID is needed in the parameters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "description": " Link to user photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the user's avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/patchUser"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
       }
     }
   },
@@ -460,8 +624,7 @@
         "type": "object",
         "required": [
           "_id",
-          "email",
-          "password"
+          "email"
         ],
         "properties": {
           "_id": {
@@ -474,11 +637,6 @@
             "type": "string",
             "format": "email",
             "example": "user@gmail.com"
-          },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "123123"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",
@@ -503,11 +661,6 @@
       },
       "patchUser": {
         "type": "object",
-        "required": [
-          "_id",
-          "email",
-          "password"
-        ],
         "properties": {
           "_id": {
             "description": "User's id",
@@ -519,11 +672,6 @@
             "type": "string",
             "format": "email",
             "example": "user@gmail.com"
-          },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "123123"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",

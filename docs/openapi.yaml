@@ -29,12 +29,12 @@ paths:
   /users/data:
     get:
       $ref: ../swagger/paths/users/get.yaml
-  /users//updateData:
+  /users/updateData:
     patch:
-      $ref:
+      $ref: ../swagger/paths/users/updateData/patch.yaml
   /users/updateAvatar:
     patch:
-      $ref:
+      $ref: ../swagger/paths/users/updateAvatar/patch.yaml
 
 components:
   securitySchemes:
