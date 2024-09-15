@@ -27,14 +27,14 @@ paths:
     post:
       $ref: ../swagger/paths/users/refresh/post.yaml
   /users/data:
-    post:
-      $ref:
-  /users//updateData:
+    get:
+      $ref: ../swagger/paths/users/get.yaml
+  /users/updateData:
     patch:
-      $ref:
+      $ref: ../swagger/paths/users/updateData/patch.yaml
   /users/updateAvatar:
     patch:
-      $ref:
+      $ref: ../swagger/paths/users/updateAvatar/patch.yaml
 
 components:
   securitySchemes:

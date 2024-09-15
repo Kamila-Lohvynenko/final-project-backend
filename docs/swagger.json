@@ -264,6 +264,352 @@
           }
         }
       }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Refresh user session",
+        "operationId": "refreshUserSession",
+        "description": "Refreshes the user session by using the provided session ID and refresh token stored in cookies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "schema": {
+              "type": "string",
+              "description": "The session ID stored in the cookies."
+            },
+            "required": true
+          },
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "schema": {
+              "type": "string",
+              "description": "The refresh token stored in the cookies."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "description": "The new access token for the refreshed session",
+                          "type": "string",
+                          "example": "newAccessTokenValue"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/data": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get information about the current user",
+        "operationId": "getCurrentUser",
+        "description": "Retrieves the information of the currently authenticated user. Authentication is required via Bearer token in the Authorization header",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "description": "User data with default values (if the user hasn't changed their profile)",
+                      "type": "object",
+                      "required": [
+                        "status",
+                        "message",
+                        "data"
+                      ],
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Successfully retrieved user information"
+                        },
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "user"
+                          ],
+                          "properties": {
+                            "user": {
+                              "$ref": "#/components/schemas/registerUser"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "description": "User data with updated profile information",
+                      "type": "object",
+                      "required": [
+                        "status",
+                        "message",
+                        "data"
+                      ],
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Successfully retrieved user information"
+                        },
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "user"
+                          ],
+                          "properties": {
+                            "user": {
+                              "$ref": "#/components/schemas/patchUser"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/updateData": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update date User",
+        "operationId": "updateUser",
+        "description": "Update user information. Data is taken from the token, so no user ID is needed in the parameters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@gmail.com"
+                  },
+                  "name": {
+                    "description": "User's name (optional, defaults to 'User')",
+                    "type": "string",
+                    "example": "Masha"
+                  },
+                  "gender": {
+                    "description": "User's gender (optional, defaults to 'woman')",
+                    "type": "string",
+                    "enum": [
+                      "woman",
+                      "man"
+                    ],
+                    "example": "woman"
+                  },
+                  "dailyNorma": {
+                    "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+                    "type": "number",
+                    "example": 1.5
+                  },
+                  "weight": {
+                    "description": "User's weight in kilograms",
+                    "type": "number",
+                    "example": 65
+                  },
+                  "activeSportTime": {
+                    "description": "User's  time of active participation in sports",
+                    "type": "number",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/patchUser"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/users/updateAvatar": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User's avatar",
+        "operationId": "updateUserAvatar",
+        "description": "Update user avatar. Data is taken from the token, so no user ID is needed in the parameters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "description": " Link to user photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the user's avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/patchUser"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -278,8 +624,7 @@
         "type": "object",
         "required": [
           "_id",
-          "email",
-          "password"
+          "email"
         ],
         "properties": {
           "_id": {
@@ -292,11 +637,6 @@
             "type": "string",
             "format": "email",
             "example": "user@gmail.com"
-          },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "123123"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",
@@ -321,11 +661,6 @@
       },
       "patchUser": {
         "type": "object",
-        "required": [
-          "_id",
-          "email",
-          "password"
-        ],
         "properties": {
           "_id": {
             "description": "User's id",
@@ -337,11 +672,6 @@
             "type": "string",
             "format": "email",
             "example": "user@gmail.com"
-          },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "123123"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",

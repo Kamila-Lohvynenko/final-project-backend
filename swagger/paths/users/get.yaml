@@ -1,0 +1,58 @@
+tags:
+  - Users
+summary: Get information about the current user
+operationId: getCurrentUser
+description: 'Retrieves the information of the currently authenticated user. Authentication is required via Bearer token in the Authorization header'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully retrieved user data
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - description: "User data with default values (if the user hasn't changed their profile)"
+              type: object
+              required:
+                - status
+                - message
+                - data
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: Successfully retrieved user information
+                data:
+                  type: object
+                  required:
+                    - user
+                  properties:
+                    user:
+                      $ref: '../../components/schemas/users/registerUser.yaml'
+            - description: 'User data with updated profile information'
+              type: object
+              required:
+                - status
+                - message
+                - data
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: Successfully retrieved user information
+                data:
+                  type: object
+                  required:
+                    - user
+                  properties:
+                    user:
+                      $ref: '../../components/schemas/users/patchUser.yaml'
+  '401':
+    $ref: '../../components/responses/users/401.yaml'
+  '404':
+    $ref: '../../components/responses/users/404.yaml'

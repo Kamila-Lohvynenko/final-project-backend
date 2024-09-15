@@ -1,8 +1,4 @@
 type: object
-required:
-  - _id
-  - email
-  - password
 properties:
   _id:
     description: "User's id"
@@ -13,10 +9,6 @@ properties:
     type: string
     format: email
     example: 'user@gmail.com'
-  password:
-    description: "User's password"
-    type: string
-    example: '123123'
   name:
     description: "User's name (optional, defaults to 'User')"
     type: string
