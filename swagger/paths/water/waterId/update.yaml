@@ -1,0 +1,55 @@
+tags:
+  - Water
+summary: 'Update water by id'
+operationId: editWater
+description: 'Update water by unique identifier'
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: objectId
+      example: '66a35382997eac73e992ae30'
+    description: 'The ID of the water to update'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          amount:
+            description: 'The amount of water consumed (in liters).'
+            type: string
+            example: '1'
+          day:
+            description: 'The day of the water record (in format DD).'
+            type: string
+            example: '05'
+          month:
+            description: 'The month of the water record (in format MM).'
+            type: string
+            example: '09'
+          year:
+            description: 'The year of the water record (in format YYYY).'
+            type: string
+            example: '2024'
+          time:
+            description: 'The time of the water record (in format HH:mm).'
+            type: string
+            example: '12:30'
+        additionalProperties: false
+  description: 'Fields to be updated for the water. Only the fields provided will be updated.'
+responses:
+  '200':
+    $ref: ../../../components/responses/water/200.yaml
+  '400':
+    $ref: ../../../components/responses/water/400.yaml
+  '401':
+    $ref: ../../../components/responses/water/401.yaml
+  '404':
+    $ref: ../../../components/responses/water/404.yaml
+  '500':
+    $ref: ../../../components/responses/water/500.yaml

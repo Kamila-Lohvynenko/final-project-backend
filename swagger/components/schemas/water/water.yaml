@@ -1,0 +1,40 @@
+type: object
+required:
+  - _id
+  - amount
+  - day
+  - month
+  - year
+  - time
+  - userId
+properties:
+  _id:
+    description: 'Backend-generated unique identifier for the water record.'
+    type: string
+    format: objectId
+    example: '66a35382997eac73e992ae30'
+  amount:
+    description: 'The amount of water consumed (in liters).'
+    type: string
+    example: '1'
+  day:
+    description: 'The day of the water record (in format DD).'
+    type: string
+    example: '05'
+  month:
+    description: 'The month of the water record (in format MM).'
+    type: string
+    example: '09'
+  year:
+    description: 'The year of the water record (in format YYYY).'
+    type: string
+    example: '2024'
+  time:
+    description: 'The time of the water record (in format HH:mm).'
+    type: string
+    example: '12:30'
+  userId:
+    description: 'Unique identifier for the user who owns this water record.'
+    type: string
+    format: objectId
+    example: '66c6fd636a79689916340fe7'

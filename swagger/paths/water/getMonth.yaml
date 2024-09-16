@@ -1,0 +1,45 @@
+tags:
+  - Water
+summary: 'Get water by id'
+operationId: getWaterByMonth
+description: 'Get all water by unique identifier'
+security:
+  - bearerAuth: []
+parameters:
+  - name: month
+    in: query
+    required: true
+    schema:
+      type: string
+      example: '09'
+    description: 'The month for which the water consumption is being queried (format MM).'
+  - name: year
+    in: query
+    required: true
+    schema:
+      type: string
+      example: '2024'
+    description: 'The year for which the water consumption is being queried (format YYYY).'
+responses:
+  '200':
+    $ref: ../../components/responses/water/200.yaml
+  '404':
+    description: 'Water not found!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Month and year are required!'
+            data:
+              type: object
+              example: {}
