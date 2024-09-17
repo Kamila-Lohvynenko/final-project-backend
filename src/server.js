@@ -31,7 +31,11 @@ export const setupServer = () => {
   app.use(
     cors({
       credentials: true,
-      origin: [process.env.CORS_DOMAIN, 'http://localhost:5173'],
+      origin: [
+        process.env.CORS_DOMAIN,
+        'http://localhost:5173',
+        'https://final-project-frontend-weld.vercel.app',
+      ],
     }),
   );
 
