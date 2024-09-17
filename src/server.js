@@ -28,7 +28,12 @@ export const setupServer = () => {
   //   }),
   // );
 
-  app.use(cors({ credentials: true, origin: process.env.CORS_DOMAIN }));
+  app.use(
+    cors({
+      credentials: true,
+      origin: [process.env.CORS_DOMAIN, 'http://localhost:5173'],
+    }),
+  );
 
   app.get('/', (req, res) => {
     res.send('Hello!');
