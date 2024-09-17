@@ -14,17 +14,10 @@ export const registerUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-    const {session, user} = await loginUser(req.body);
-
-    res.cookie('refreshToken', session.refreshToken, {
-        httpOnly: true,
-        expires: new Date(Date.now() + THIRTY_DAYS),
-    });
-    res.cookie('sessionId', session._id, {
-        httpOnly: true,
-        expires: new Date(Date.now() + THIRTY_DAYS),
-    });
-
+    const { session, user } = await loginUser(req.body);
+    
+    setSessionCookies(res, session)
+    
     res.json({
         status: 200,
         message: 'Succesfully loged in an user!',
