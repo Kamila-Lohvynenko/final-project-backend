@@ -84,7 +84,7 @@ export const getWaterByMonthController = async (req, res, next) => {
      }
    
      const result = await getWaterByMonth(userId, month, year); 
-   
+  
      res.status(200).json({
        status: 200,
        message: 'Successfully update the water!',

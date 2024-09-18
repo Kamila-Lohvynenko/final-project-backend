@@ -13,6 +13,8 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:8080
+  - url: https://final-project-backend-1-tzfm.onrender.com/
+  
 paths:
   /users/register:
     post:

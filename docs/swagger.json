@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://localhost:8080"
+    },
+    {
+      "url": "https://final-project-backend-1-tzfm.onrender.com/"
     }
   ],
   "tags": [
