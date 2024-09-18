@@ -25,11 +25,11 @@ router.patch('/updateData', jsonParser, authenticate, validateBody(updateDataUse
 
 router.patch('/updateAvatar', authenticate, upload.single('avatar'), ctrlWrapper(updateDataUserController));
 
-router.post('send-reset-email', jsonParser, validateBody(requestResetEmailSchema), ctrlWrapper(requestResetEmailController));
+router.post('/send-reset-email', jsonParser, validateBody(requestResetEmailSchema), ctrlWrapper(requestResetEmailController));
 
 router.post('/reset-pwd', jsonParser, validateBody(resetPasswordSchema), ctrlWrapper(resetPasswordComtroller));
 
-router.get('get-oauth-url', ctrlWrapper(getOAuthUrlController));
+router.get('/get-oauth-url', ctrlWrapper(getOAuthUrlController));
 
 router.post('/confirm-oauth', jsonParser, validateBody(confirmOAuthSchema), ctrlWrapper(confirmOAuthController));
 
