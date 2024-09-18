@@ -10,3 +10,7 @@ export const UPLOAD_DIR = path.join(process.cwd(), 'src', 'public', 'userAvatars
 
 
 export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
+
+
+export const TEMPLATES_DIR = path.join(process.cwd(),
+    'src', 'templates');
