@@ -1,7 +1,19 @@
-export const requestResetEmailController = async (req, res, next) => {
-    
-}
+import { requestResetToken, resetPassword } from "../services/reset-password.js"
 
-export const resetPasswordComtroller = async (req, res, next) => {
-    
-}
+export const requestResetEmailController = async (req, res) => {
+    await requestResetToken(req.body.email);
+    res.json({
+        message: 'Reset password email was successfully sent!',
+        status: 200,
+        data: {},
+    });
+};
+
+export const resetPasswordComtroller = async (req, res) => {
+    await resetPassword(req.body);
+    res.json({
+        message: 'Password was successfully reset!',
+        status: 200,
+        data: {},
+    });
+};
