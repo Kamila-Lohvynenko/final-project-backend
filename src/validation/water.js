@@ -24,6 +24,49 @@ export const waterRecordValidationSchema = Joi.object({
 
 });
 
+ export const querySchemaDay = Joi.object({
+  day: Joi.string()
+    .pattern(/^(0[1-9]|[12][0-9]|3[01])$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Day must be a valid day (01-31).',
+      'any.required': 'Day is required.',
+    }),
+  month: Joi.string()
+    .pattern(/^(0[1-9]|1[0-2])$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Month must be a valid month (01-12).',
+      'any.required': 'Month is required.',
+    }),
+  year: Joi.string()
+    .pattern(/^[0-9]{4}$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Year must be a valid year (YYYY).',
+      'any.required': 'Year is required.',
+    })
+});
+
+
+
+export const querySchemaMonth = Joi.object({
+  month: Joi.string()
+    .pattern(/^(0[1-9]|1[0-2])$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Month must be a valid month (01-12).',
+      'any.required': 'Month is required.',
+    }),
+  year: Joi.string()
+    .pattern(/^[0-9]{4}$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Year must be a valid year (YYYY).',
+      'any.required': 'Year is required.',
+    })
+});
+
 export const updateWaterRecordValidationSchema = Joi.object({
   amount: Joi.number().min(0.05).max(10000),
   day: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/),
