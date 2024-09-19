@@ -24,8 +24,8 @@ router.use(authenticate);
 
 router.post(
   '/',
-  validateBody(waterRecordValidationSchema),
   jsonParser,
+  validateBody(waterRecordValidationSchema),
   ctrlWrapper(addWaterController),
 );
 
