@@ -39,8 +39,18 @@ router.patch(
 
 router.delete('/:id', isValidId('id'), ctrlWrapper(deleteWaterController));
 
-router.get('/day', jsonParser, validateBody(querySchemaDay), ctrlWrapper(getWaterByDayController));
+router.post(
+  '/day',
+  jsonParser,
+  validateBody(querySchemaDay),
+  ctrlWrapper(getWaterByDayController),
+);
 
-router.get('/month', jsonParser, validateBody(querySchemaMonth), ctrlWrapper(getWaterByMonthController));
+router.post(
+  '/month',
+  jsonParser,
+  validateBody(querySchemaMonth),
+  ctrlWrapper(getWaterByMonthController),
+);
 
 export default router;
