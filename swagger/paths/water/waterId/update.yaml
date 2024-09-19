@@ -1,8 +1,8 @@
 tags:
   - Water
-summary: 'Update water by id'
+summary: 'Update water by ID'
 operationId: editWater
-description: 'Update water by unique identifier'
+description: 'Update a water record by its unique identifier.'
 security:
   - bearerAuth: []
 parameters:
@@ -13,7 +13,7 @@ parameters:
       type: string
       format: objectId
       example: '66a35382997eac73e992ae30'
-    description: 'The ID of the water to update'
+    description: 'The unique ID of the water record to update.'
 requestBody:
   content:
     application/json:
@@ -22,34 +22,59 @@ requestBody:
         properties:
           amount:
             description: 'The amount of water consumed (in liters).'
-            type: string
-            example: '1'
+            type: number
+            format: float
+            example: 1.0
+            minimum: 0.05
+            maximum: 10.0
           day:
             description: 'The day of the water record (in format DD).'
             type: string
             example: '05'
+            pattern: '^(0[1-9]|[12][0-9]|3[01])$'
           month:
             description: 'The month of the water record (in format MM).'
             type: string
             example: '09'
+            pattern: '^(0[1-9]|1[0-2])$'
           year:
             description: 'The year of the water record (in format YYYY).'
             type: string
             example: '2024'
+            pattern: '^\d{4}$'
           time:
             description: 'The time of the water record (in format HH:mm).'
             type: string
             example: '12:30'
+            pattern: '^([0-1]\d|2[0-3]):([0-5]\d)$'
         additionalProperties: false
-  description: 'Fields to be updated for the water. Only the fields provided will be updated.'
+  description: 'Fields to be updated for the water record. Only the fields provided will be updated.'
 responses:
   '200':
-    $ref: ../../../components/responses/water/200.yaml
+    description: 'Successfully updated the water record.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully updated the water record!'
+            data:
+              type: object
+              $ref: '../../../components/schemas/water/water.yaml'
   '400':
-    $ref: ../../../components/responses/water/400.yaml
+    $ref: '../../../components/responses/water/400.yaml'
   '401':
-    $ref: ../../../components/responses/water/401.yaml
+    $ref: '../../../components/responses/water/401.yaml'
   '404':
-    $ref: ../../../components/responses/water/404.yaml
+    $ref: '../../../components/responses/water/404.yaml'
   '500':
-    $ref: ../../../components/responses/water/500.yaml
+    $ref: '../../../components/responses/water/500.yaml'

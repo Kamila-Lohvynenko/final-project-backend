@@ -16,6 +16,5 @@ content:
           type: string
           example: 'Successfully update the water!'
         data:
-          type: array
-          items: 
+          type: array 
           $ref: ../../../components/schemas/water/water.yaml

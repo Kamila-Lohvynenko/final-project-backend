@@ -1,0 +1,49 @@
+tags:
+  - Users
+summary: "Update User's Avatar"
+operationId: updateUserAvatar
+description: 'Update the avatar of the currently authenticated user. The user ID is derived from the token, so it is not required in the request parameters. The avatar should be a valid URL to an image or a binary file.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          avatar:
+            description: 'Link to the user photo or binary file representing the new avatar image.'
+            type: string
+            format: binary
+            example: 'https://example.com/new-avatar.jpg'
+responses:
+  '200':
+    description: 'Successfully updated the user’s avatar.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+              description: 'HTTP status code indicating the success of the operation.'
+            message:
+              type: string
+              example: Successfully updated the user’s avatar!
+              description: 'Message confirming the successful update of the avatar.'
+            data:
+              type: object
+              required:
+                - user
+              properties:
+                user:
+                  $ref: '../../../components/schemas/users/patchUser.yaml'
+                  description: 'Updated user information including the new avatar.'
+  '401':
+    $ref: '../../../components/responses/users/401.yaml'
+    description: 'Unauthorized - Invalid or missing authentication token.'

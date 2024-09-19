@@ -11,47 +11,78 @@ responses:
     content:
       application/json:
         schema:
-          oneOf:
-            - description: "User data with default values (if the user hasn't changed their profile)"
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+              description: Status code of the response
+            message:
+              type: string
+              example: Successfully retrieved user information
+              description: Message indicating the result of the operation
+            data:
               type: object
               required:
-                - status
-                - message
-                - data
+                - userId
+                - name
+                - email
+                - gender
+                - weight
+                - activeSportTime
+                - dailyNorma
+                - avatar
               properties:
-                status:
-                  type: integer
-                  example: 200
-                message:
+                userId:
                   type: string
-                  example: Successfully retrieved user information
-                data:
-                  type: object
-                  required:
-                    - user
-                  properties:
-                    user:
-                      $ref: '../../components/schemas/users/registerUser.yaml'
-            - description: 'User data with updated profile information'
-              type: object
-              required:
-                - status
-                - message
-                - data
-              properties:
-                status:
-                  type: integer
-                  example: 200
-                message:
+                  example: '66e4c8a76d2c283aa68ab68f'
+                  description: Unique identifier for the user
+                name:
                   type: string
-                  example: Successfully retrieved user information
-                data:
-                  type: object
-                  required:
-                    - user
-                  properties:
-                    user:
-                      $ref: '../../components/schemas/users/patchUser.yaml'
+                  minLength: 1
+                  maxLength: 100
+                  example: 'John Doe'
+                  description: Name of the user
+                email:
+                  type: string
+                  format: email
+                  example: 'john.doe@example.com'
+                  description: Email address of the user
+                gender:
+                  type: string
+                  enum: ['woman', 'man']
+                  example: 'woman'
+                  description: Gender of the user
+                weight:
+                  type: number
+                  format: float
+                  example: 70
+                  minimum: 1
+                  maximum: 500
+                  description: Weight of the user in kilograms
+                activeSportTime:
+                  type: number
+                  format: float
+                  example: 1.5
+                  minimum: 1
+                  maximum: 24
+                  description: Number of hours per week the user is active in sports
+                dailyNorma:
+                  type: number
+                  format: float
+                  example: 2.0
+                  minimum: 1
+                  maximum: 10
+                  description: Daily water consumption in liters
+                avatar:
+                  type: string
+                  format: uri
+                  example: 'https://example.com/avatar.jpg'
+                  description: URL of the user's avatar image
   '401':
     $ref: '../../components/responses/users/401.yaml'
   '404':
