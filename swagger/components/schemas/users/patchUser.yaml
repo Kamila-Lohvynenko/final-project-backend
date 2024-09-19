@@ -29,20 +29,22 @@ properties:
     description: "User's daily water consumption in liters (optional, defaults '1.5')"
     type: number
     example: 1.5
-    minimum: 1  
+    minimum: 1
+    maximum: 10  
 
   weight:
     description: "User's weight in kilograms"
     type: number
     example: 65
-    minimum: 30  
-    maximum: 300  
+    minimum: 1  
+    maximum: 500  
 
   activeSportTime:
     description: "User's time of active participation in sports (hours per week)"
     type: number
     example: 5
-    minimum: 1  
+    minimum: 1
+    maximum: 24  
 
   avatar:
     description: 'Link to user photo'
