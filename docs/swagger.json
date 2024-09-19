@@ -269,25 +269,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully logged out",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logged out"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Successfully logged out, no content returned"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -1135,18 +1118,18 @@
             "example": "66e69d630a8a440495bed3cc",
             "pattern": "^[a-fA-F0-9]{24}$"
           },
+          "name": {
+            "description": "User's name (optional, defaults to 'User')",
+            "type": "string",
+            "example": "Masha",
+            "maxLength": 100
+          },
           "email": {
             "description": "User's email",
             "type": "string",
             "format": "email",
             "example": "user@gmail.com",
             "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
-          },
-          "name": {
-            "description": "User's name (optional, defaults to 'User')",
-            "type": "string",
-            "example": "Masha",
-            "maxLength": 100
           },
           "gender": {
             "description": "User's gender (optional, defaults to 'woman')",
@@ -1156,6 +1139,20 @@
               "man"
             ],
             "example": "woman"
+          },
+          "weight": {
+            "description": "User's weight (optional, defaults to '50')",
+            "type": "number",
+            "example": 50,
+            "minimum": 0,
+            "maximum": 500
+          },
+          "activeSportTime": {
+            "description": "User's time of active participation in sports (hours per week)",
+            "type": "number",
+            "example": 5,
+            "minimum": 1,
+            "maximum": 24
           },
           "dailyNorma": {
             "description": "User's daily water consumption in liters (optional, defaults '1.5')",
