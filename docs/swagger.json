@@ -11,10 +11,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080"
+      "url": "https://final-project-backend-1-tzfm.onrender.com/"
     },
     {
-      "url": "https://final-project-backend-1-tzfm.onrender.com/"
+      "url": "http://localhost:8080"
     }
   ],
   "tags": [
@@ -365,68 +365,96 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "description": "User data with default values (if the user hasn't changed their profile)",
-                      "type": "object",
-                      "required": [
-                        "status",
-                        "message",
-                        "data"
-                      ],
-                      "properties": {
-                        "status": {
-                          "type": "integer",
-                          "example": 200
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Successfully retrieved user information"
-                        },
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "user"
-                          ],
-                          "properties": {
-                            "user": {
-                              "$ref": "#/components/schemas/registerUser"
-                            }
-                          }
-                        }
-                      }
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200,
+                      "description": "Status code of the response"
                     },
-                    {
-                      "description": "User data with updated profile information",
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved user information",
+                      "description": "Message indicating the result of the operation"
+                    },
+                    "data": {
                       "type": "object",
                       "required": [
-                        "status",
-                        "message",
-                        "data"
+                        "userId",
+                        "name",
+                        "email",
+                        "gender",
+                        "weight",
+                        "activeSportTime",
+                        "dailyNorma",
+                        "avatar"
                       ],
                       "properties": {
-                        "status": {
-                          "type": "integer",
-                          "example": 200
-                        },
-                        "message": {
+                        "userId": {
                           "type": "string",
-                          "example": "Successfully retrieved user information"
+                          "example": "66e4c8a76d2c283aa68ab68f",
+                          "description": "Unique identifier for the user"
                         },
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "user"
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100,
+                          "example": "John Doe",
+                          "description": "Name of the user"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "john.doe@example.com",
+                          "description": "Email address of the user"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "enum": [
+                            "woman",
+                            "man"
                           ],
-                          "properties": {
-                            "user": {
-                              "$ref": "#/components/schemas/patchUser"
-                            }
-                          }
+                          "example": "woman",
+                          "description": "Gender of the user"
+                        },
+                        "weight": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 70,
+                          "minimum": 1,
+                          "maximum": 500,
+                          "description": "Weight of the user in kilograms"
+                        },
+                        "activeSportTime": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 1.5,
+                          "minimum": 1,
+                          "maximum": 24,
+                          "description": "Number of hours per week the user is active in sports"
+                        },
+                        "dailyNorma": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 2,
+                          "minimum": 1,
+                          "maximum": 10,
+                          "description": "Daily water consumption in liters"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "format": "uri",
+                          "example": "https://example.com/avatar.jpg",
+                          "description": "URL of the user's avatar image"
                         }
                       }
                     }
-                  ]
+                  }
                 }
               }
             }
@@ -440,14 +468,14 @@
         }
       }
     },
-    "/users/updateData": {
+    "/users/userId": {
       "patch": {
         "tags": [
           "Users"
         ],
-        "summary": "Update date User",
+        "summary": "Update User Data",
         "operationId": "updateUser",
-        "description": "Update user information. Data is taken from the token, so no user ID is needed in the parameters",
+        "description": "Update user information. Data is taken from the token, so no user ID is needed in the parameters.",
         "security": [
           {
             "bearerAuth": []
@@ -460,18 +488,18 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "description": "User's email",
+                    "description": "The user's email address. Must be a valid email format.",
                     "type": "string",
                     "format": "email",
                     "example": "user@gmail.com"
                   },
                   "name": {
-                    "description": "User's name (optional, defaults to 'User')",
+                    "description": "The user's name. Optional. Defaults to 'User' if not provided.",
                     "type": "string",
                     "example": "Masha"
                   },
                   "gender": {
-                    "description": "User's gender (optional, defaults to 'woman')",
+                    "description": "The user's gender. Optional. Defaults to 'woman' if not provided. Must be either 'woman' or 'man'.",
                     "type": "string",
                     "enum": [
                       "woman",
@@ -480,19 +508,28 @@
                     "example": "woman"
                   },
                   "dailyNorma": {
-                    "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+                    "description": "The user's daily water consumption in liters. Optional. Defaults to '1.5' if not provided.",
                     "type": "number",
-                    "example": 1.5
+                    "format": "float",
+                    "example": 1.5,
+                    "minimum": 1,
+                    "maximum": 10
                   },
                   "weight": {
-                    "description": "User's weight in kilograms",
+                    "description": "The user's weight in kilograms. Optional.",
                     "type": "number",
-                    "example": 65
+                    "format": "float",
+                    "example": 65,
+                    "minimum": 1,
+                    "maximum": 500
                   },
                   "activeSportTime": {
-                    "description": "User's  time of active participation in sports",
+                    "description": "The time (in hours) the user spends on sports activities per week. Optional.",
                     "type": "number",
-                    "example": 5
+                    "format": "float",
+                    "example": 5,
+                    "minimum": 1,
+                    "maximum": 24
                   }
                 }
               }
@@ -501,7 +538,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully update the user",
+            "description": "Successfully updated the user information.",
             "content": {
               "application/json": {
                 "schema": {
@@ -514,11 +551,13 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 200,
+                      "description": "HTTP status code of the response."
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully updated the user!"
+                      "example": "Successfully updated the user!",
+                      "description": "Message indicating the result of the update operation."
                     },
                     "data": {
                       "type": "object",
@@ -527,7 +566,8 @@
                       ],
                       "properties": {
                         "user": {
-                          "$ref": "#/components/schemas/patchUser"
+                          "$ref": "#/components/schemas/patchUser",
+                          "description": "Updated user data."
                         }
                       }
                     }
@@ -537,19 +577,20 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/401",
+            "description": "Unauthorized - Invalid or missing token."
           }
         }
       }
     },
-    "/users/updateAvatar": {
+    "/users/avatar": {
       "patch": {
         "tags": [
           "Users"
         ],
-        "summary": "Update User's avatar",
+        "summary": "Update User's Avatar",
         "operationId": "updateUserAvatar",
-        "description": "Update user avatar. Data is taken from the token, so no user ID is needed in the parameters",
+        "description": "Update the avatar of the currently authenticated user. The user ID is derived from the token, so it is not required in the request parameters. The avatar should be a valid URL to an image or a binary file.",
         "security": [
           {
             "bearerAuth": []
@@ -562,9 +603,10 @@
                 "type": "object",
                 "properties": {
                   "avatar": {
-                    "description": " Link to user photo",
+                    "description": "Link to the user photo or binary file representing the new avatar image.",
                     "type": "string",
-                    "format": "binary"
+                    "format": "binary",
+                    "example": "https://example.com/new-avatar.jpg"
                   }
                 }
               }
@@ -573,7 +615,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully update the user's avatar",
+            "description": "Successfully updated the user’s avatar.",
             "content": {
               "application/json": {
                 "schema": {
@@ -586,11 +628,13 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 200,
+                      "description": "HTTP status code indicating the success of the operation."
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully updated the user!"
+                      "example": "Successfully updated the user’s avatar!",
+                      "description": "Message confirming the successful update of the avatar."
                     },
                     "data": {
                       "type": "object",
@@ -599,7 +643,8 @@
                       ],
                       "properties": {
                         "user": {
-                          "$ref": "#/components/schemas/patchUser"
+                          "$ref": "#/components/schemas/patchUser",
+                          "description": "Updated user information including the new avatar."
                         }
                       }
                     }
@@ -609,7 +654,8 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/401",
+            "description": "Unauthorized - Invalid or missing authentication token."
           }
         }
       }
@@ -619,9 +665,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Get water by id",
+        "summary": "Get water by date",
         "operationId": "getWaterByDay",
-        "description": "Get all water by unique identifier",
+        "description": "Retrieve all water records for a specific date by day, month, and year.",
         "security": [
           {
             "bearerAuth": []
@@ -634,9 +680,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "15"
+              "example": "15",
+              "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
             },
-            "description": "The day for which the water consumption is being queried (format DD)."
+            "description": "The day of the record (format DD). Must be a valid day (01-31)."
           },
           {
             "name": "month",
@@ -644,9 +691,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "09"
+              "example": "09",
+              "pattern": "^(0[1-9]|1[0-2])$"
             },
-            "description": "The month for which the water consumption is being queried (format MM)."
+            "description": "The month of the record (format MM). Must be a valid month (01-12)."
           },
           {
             "name": "year",
@@ -654,9 +702,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "2024"
+              "example": "2024",
+              "pattern": "^\\d{4}$"
             },
-            "description": "The year for which the water consumption is being queried (format YYYY)."
+            "description": "The year of the record (format YYYY). Must be a valid year (4 digits)."
           }
         ],
         "responses": {
@@ -664,7 +713,7 @@
             "$ref": "#/components/responses/200"
           },
           "404": {
-            "description": "Water not found!",
+            "description": "Water records not found for the specified date.",
             "content": {
               "application/json": {
                 "schema": {
@@ -681,7 +730,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Day, month, and year are required!"
+                      "example": "No water records found for the specified date!"
                     },
                     "data": {
                       "type": "object",
@@ -700,9 +749,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Get water by id",
+        "summary": "Get water by month",
         "operationId": "getWaterByMonth",
-        "description": "Get all water by unique identifier",
+        "description": "Retrieve all water records for a specific month and year.",
         "security": [
           {
             "bearerAuth": []
@@ -715,9 +764,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "09"
+              "example": "09",
+              "pattern": "^(0[1-9]|1[0-2])$"
             },
-            "description": "The month for which the water consumption is being queried (format MM)."
+            "description": "The month for the water records (format MM). Must be a valid month (01-12)."
           },
           {
             "name": "year",
@@ -725,9 +775,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "2024"
+              "example": "2024",
+              "pattern": "^\\d{4}$"
             },
-            "description": "The year for which the water consumption is being queried (format YYYY)."
+            "description": "The year for the water records (format YYYY). Must be a valid year (4 digits)."
           }
         ],
         "responses": {
@@ -735,7 +786,7 @@
             "$ref": "#/components/responses/200"
           },
           "404": {
-            "description": "Water not found!",
+            "description": "Water records not found for the specified month and year.",
             "content": {
               "application/json": {
                 "schema": {
@@ -771,9 +822,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Add a new water",
+        "summary": "Add a new water record",
         "operationId": "addWater",
-        "description": "Add a water with data",
+        "description": "Add a water record with data",
         "security": [
           {
             "bearerAuth": []
@@ -794,34 +845,41 @@
                 "properties": {
                   "amount": {
                     "description": "The amount of water consumed (in liters).",
-                    "type": "string",
-                    "example": "1"
+                    "type": "number",
+                    "format": "float",
+                    "example": 1,
+                    "minimum": 0.05,
+                    "maximum": 10
                   },
                   "day": {
                     "description": "The day of the water record (in format DD).",
                     "type": "string",
-                    "example": "05"
+                    "example": "05",
+                    "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
                   },
                   "month": {
                     "description": "The month of the water record (in format MM).",
                     "type": "string",
-                    "example": "09"
+                    "example": "09",
+                    "pattern": "^(0[1-9]|1[0-2])$"
                   },
                   "year": {
                     "description": "The year of the water record (in format YYYY).",
                     "type": "string",
-                    "example": "2024"
+                    "example": "2024",
+                    "pattern": "^\\d{4}$"
                   },
                   "time": {
                     "description": "The time of the water record (in format HH:mm).",
                     "type": "string",
-                    "example": "12:30"
+                    "example": "12:30",
+                    "pattern": "^([0-1]\\d|2[0-3]):([0-5]\\d)$"
                   }
                 }
               }
             }
           },
-          "description": "Details to create a water."
+          "description": "Details to create a water record."
         },
         "responses": {
           "201": {
@@ -870,9 +928,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Update water by id",
+        "summary": "Update water by ID",
         "operationId": "editWater",
-        "description": "Update water by unique identifier",
+        "description": "Update a water record by its unique identifier.",
         "security": [
           {
             "bearerAuth": []
@@ -888,7 +946,7 @@
               "format": "objectId",
               "example": "66a35382997eac73e992ae30"
             },
-            "description": "The ID of the water to update"
+            "description": "The unique ID of the water record to update."
           }
         ],
         "requestBody": {
@@ -899,39 +957,72 @@
                 "properties": {
                   "amount": {
                     "description": "The amount of water consumed (in liters).",
-                    "type": "string",
-                    "example": "1"
+                    "type": "number",
+                    "format": "float",
+                    "example": 1,
+                    "minimum": 0.05,
+                    "maximum": 10
                   },
                   "day": {
                     "description": "The day of the water record (in format DD).",
                     "type": "string",
-                    "example": "05"
+                    "example": "05",
+                    "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
                   },
                   "month": {
                     "description": "The month of the water record (in format MM).",
                     "type": "string",
-                    "example": "09"
+                    "example": "09",
+                    "pattern": "^(0[1-9]|1[0-2])$"
                   },
                   "year": {
                     "description": "The year of the water record (in format YYYY).",
                     "type": "string",
-                    "example": "2024"
+                    "example": "2024",
+                    "pattern": "^\\d{4}$"
                   },
                   "time": {
                     "description": "The time of the water record (in format HH:mm).",
                     "type": "string",
-                    "example": "12:30"
+                    "example": "12:30",
+                    "pattern": "^([0-1]\\d|2[0-3]):([0-5]\\d)$"
                   }
                 },
                 "additionalProperties": false
               }
             }
           },
-          "description": "Fields to be updated for the water. Only the fields provided will be updated."
+          "description": "Fields to be updated for the water record. Only the fields provided will be updated."
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200"
+            "description": "Successfully updated the water record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the water record!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/400"
@@ -1161,7 +1252,6 @@
                 },
                 "data": {
                   "type": "array",
-                  "items": null,
                   "$ref": "#/components/schemas/water"
                 }
               }

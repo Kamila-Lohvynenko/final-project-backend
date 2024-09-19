@@ -9,7 +9,8 @@ const waterRecordSchema = new Schema({
     amount: {
       type: Number, 
       required: true,
-      min: 0.05    
+      min: 0.05,
+      max: 10000    
     },
     day: {
       type: String,

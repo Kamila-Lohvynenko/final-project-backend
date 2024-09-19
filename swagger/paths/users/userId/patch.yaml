@@ -1,0 +1,79 @@
+tags:
+  - Users
+summary: Update User Data
+operationId: updateUser
+description: 'Update user information. Data is taken from the token, so no user ID is needed in the parameters.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            description: "The user's email address. Must be a valid email format."
+            type: string
+            format: email
+            example: 'user@gmail.com'
+          name:
+            description: "The user's name. Optional. Defaults to 'User' if not provided."
+            type: string
+            example: 'Masha'
+          gender:
+            description: "The user's gender. Optional. Defaults to 'woman' if not provided. Must be either 'woman' or 'man'."
+            type: string
+            enum: ['woman', 'man']
+            example: 'woman'
+          dailyNorma:
+            description: "The user's daily water consumption in liters. Optional. Defaults to '1.5' if not provided."
+            type: number
+            format: float
+            example: 1.5
+            minimum: 1  # Adjusted minimum value to be more realistic for daily water consumption
+            maximum: 10.0
+          weight:
+            description: "The user's weight in kilograms. Optional."
+            type: number
+            format: float
+            example: 65
+            minimum: 1
+            maximum: 500  # Set a reasonable maximum value for weight
+          activeSportTime:
+            description: "The time (in hours) the user spends on sports activities per week. Optional."
+            type: number
+            format: float
+            example: 5
+            minimum: 1
+            maximum: 24
+responses:
+  '200':
+    description: 'Successfully updated the user information.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+              description: HTTP status code of the response.
+            message:
+              type: string
+              example: Successfully updated the user!
+              description: Message indicating the result of the update operation.
+            data:
+              type: object
+              required:
+                - user
+              properties:
+                user:
+                  $ref: '../../../components/schemas/users/patchUser.yaml'
+                  description: Updated user data.
+  '401':
+    $ref: '../../../components/responses/users/401.yaml'
+    description: Unauthorized - Invalid or missing token.

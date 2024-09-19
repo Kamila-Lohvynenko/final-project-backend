@@ -101,12 +101,13 @@ export const getCurrentUser = async (userId) => {
         throw createHttpError(404, 'User not found');
     }
 
-    const { _id, name, email, dailyNorma, weight, activeSportTime, avatar } = user;
+    const { _id, name, email, dailyNorma, gender, weight, activeSportTime, avatar } = user;
 
     return {
         _id,
         name: name || 'User',
         email,
+        gender,
         dailyNorma: dailyNorma || 1.5,
         weight,
         activeSportTime,

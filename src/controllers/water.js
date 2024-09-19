@@ -62,7 +62,7 @@ export const deleteWaterController = async (req, res, next) => {
 
 export const getWaterByDayController = async (req, res) => {
   const userId = req.user._id;
-  console.log(req.body);
+
 
   const { day, month, year } = req.body;
 
@@ -79,11 +79,12 @@ export const getWaterByDayController = async (req, res) => {
   });
 };
 
-export const getWaterByMonthController = async (req, res, next) => {
+export const getWaterByMonthController = async (req, res) => {
   const userId = req.user._id;
-  const { month, year } = req.query;
+  const { month, year } = req.body;
 
   if (!month || !year) {
+   
     throw createHttpError(404, 'Month and year are required!');
   }
 

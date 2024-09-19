@@ -12,8 +12,8 @@ tags:
   - name: Users
     description: Auth operations.
 servers:
-  - url: http://localhost:8080
   - url: https://final-project-backend-1-tzfm.onrender.com/
+  - url: http://localhost:8080
   
 paths:
   /users/register:
@@ -31,12 +31,12 @@ paths:
   /users/data:
     get:
       $ref: ../swagger/paths/users/get.yaml
-  /users/updateData:
+  /users/userId:
     patch:
-      $ref: ../swagger/paths/users/updateData/patch.yaml
-  /users/updateAvatar:
+      $ref: ../swagger/paths/users/userId/patch.yaml
+  /users/avatar:
     patch:
-      $ref: ../swagger/paths/users/updateAvatar/patch.yaml
+      $ref: ../swagger/paths/users/avatar/patch.yaml
       
   /water/day:
     get:

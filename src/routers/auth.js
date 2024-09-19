@@ -21,9 +21,9 @@ router.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 router.get('/data', authenticate, ctrlWrapper(getUserCurrentUserController));
 
-router.patch('/updateData', jsonParser, authenticate, validateBody(updateDataUserSchema), ctrlWrapper(updateDataUserController));
+router.patch('/userId', jsonParser, authenticate, validateBody(updateDataUserSchema), ctrlWrapper(updateDataUserController));
 
-router.patch('/updateAvatar', authenticate, upload.single('avatar'), ctrlWrapper(updateDataUserController));
+router.patch('/avatar', authenticate, upload.single('avatar'), ctrlWrapper(updateDataUserController));
 
 router.post('/send-reset-email', jsonParser, validateBody(requestResetEmailSchema), ctrlWrapper(requestResetEmailController));
 
