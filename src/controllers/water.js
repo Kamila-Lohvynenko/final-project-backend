@@ -63,19 +63,23 @@ export const deleteWaterController = async (req, res, next) => {
 export const getWaterByDayController = async (req, res) => {
   const userId = req.user._id;
 
-
   const { day, month, year } = req.body;
 
   if (!day || !month || !year) {
     throw createHttpError(404, 'Day, month, and year are required!');
   }
 
-  const result = await getWaterByDay(userId, day, month, year);
+  const data = await getWaterByDay(userId, day, month, year);
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully update the water!',
-    data: result,
+    message: 'Successfully fetched the water consumption data!',
+    resultData: {
+      records: data.records,        
+      totalWater: data.totalWater,  
+      dailyNorma: data.dailyNorma,  
+      percentage: data.percentage,  
+    },
   });
 };
 

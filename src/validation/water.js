@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 export const waterRecordValidationSchema = Joi.object({
-  amount: Joi.number().min(0.05).max(10).required().messages({
-    'number.min': 'The amount of water must be greater than 0.05 liters',
-    'number.max': 'The amount of water must be less than or equal to 10 liters',
+  amount: Joi.number().min(50).max(10000).required().messages({
+    'number.min': 'The amount of water must be greater than 50 milliliters',
+    'number.max': 'The amount of water must be less than or equal to 10000 milliliters',
     'any.required': 'The amount of water is a required field',
   }),
   day: Joi.string()
@@ -78,7 +78,7 @@ export const querySchemaMonth = Joi.object({
 });
 
 export const updateWaterRecordValidationSchema = Joi.object({
-  amount: Joi.number().min(0.05).max(10),
+  amount: Joi.number().min(50).max(10000),
   day: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/),
   month: Joi.string().pattern(/^(0[1-9]|1[0-2])$/),
   year: Joi.string().pattern(/^\d{4}$/),
