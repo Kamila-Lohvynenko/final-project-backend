@@ -18,10 +18,14 @@ requestBody:
             type: string
             format: email
             example: 'user@gmail.com'
+            pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'  # Проверка на формат email
           password:
             description: "User's password"
             type: string
+            minLength: 6  # Минимальная длина пароля
+            maxLength: 128  # Максимальная длина пароля
             example: '123123'
+            pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$'  # Должен содержать как минимум одну заглавную букву, одну строчную букву и одну цифру
 responses:
   '200':
     description: User successfully logged in
@@ -39,9 +43,11 @@ responses:
                 status:
                   type: integer
                   example: 200
+                  description: 'HTTP status code indicating the success of the operation.'
                 message:
                   type: string
-                  example: Succesfully loged in an user!
+                  example: 'Successfully logged in the user!'
+                  description: 'Message confirming successful login.'
                 data:
                   type: object
                   required:
@@ -51,8 +57,13 @@ responses:
                     accessToken:
                       type: string
                       example: 'YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO'
+                      description: 'JWT token for authenticated sessions.'
+                      pattern: '^[A-Za-z0-9\-_\.]+$'  # Убедитесь, что токен соответствует допустимому формату
                     user:
-                      $ref: '../../../components/schemas/users/registerUser.yaml'
+                      oneOf:
+                        - $ref: '../../../components/schemas/users/registerUser.yaml'
+                        - $ref: '../../../components/schemas/users/patchUser.yaml'
+                      description: 'User information including profile data.'
             - description: 'User data with updated profile information'
               type: object
               required:
@@ -63,9 +74,11 @@ responses:
                 status:
                   type: integer
                   example: 200
+                  description: 'HTTP status code indicating the success of the operation.'
                 message:
                   type: string
-                  example: Succesfully loged in an user!
+                  example: 'Successfully logged in the user!'
+                  description: 'Message confirming successful login.'
                 data:
                   type: object
                   required:
@@ -75,9 +88,16 @@ responses:
                     accessToken:
                       type: string
                       example: 'YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO'
+                      description: 'JWT token for authenticated sessions.'
+                      pattern: '^[A-Za-z0-9\-_\.]+$'  # Убедитесь, что токен соответствует допустимому формату
                     user:
-                      $ref: '../../../components/schemas/users/patchUser.yaml'
+                      oneOf:
+                        - $ref: '../../../components/schemas/users/registerUser.yaml'
+                        - $ref: '../../../components/schemas/users/patchUser.yaml'
+                      description: 'User information including profile data.'
   '401':
     $ref: '../../../components/responses/users/401.yaml'
+    description: 'Unauthorized - Invalid email or password.'
   '404':
     $ref: '../../../components/responses/users/404.yaml'
+    description: 'Not Found - User not found.'

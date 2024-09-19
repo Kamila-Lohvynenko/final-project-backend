@@ -122,12 +122,16 @@
                     "description": "User's email",
                     "type": "string",
                     "format": "email",
-                    "example": "user@gmail.com"
+                    "example": "user@gmail.com",
+                    "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
                   },
                   "password": {
                     "description": "User's password",
                     "type": "string",
-                    "example": "123123"
+                    "minLength": 6,
+                    "maxLength": 128,
+                    "example": "123123",
+                    "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$"
                   }
                 }
               }
@@ -152,11 +156,13 @@
                       "properties": {
                         "status": {
                           "type": "integer",
-                          "example": 200
+                          "example": 200,
+                          "description": "HTTP status code indicating the success of the operation."
                         },
                         "message": {
                           "type": "string",
-                          "example": "Succesfully loged in an user!"
+                          "example": "Successfully logged in the user!",
+                          "description": "Message confirming successful login."
                         },
                         "data": {
                           "type": "object",
@@ -167,10 +173,20 @@
                           "properties": {
                             "accessToken": {
                               "type": "string",
-                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO"
+                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO",
+                              "description": "JWT token for authenticated sessions.",
+                              "pattern": "^[A-Za-z0-9\\-_\\.]+$"
                             },
                             "user": {
-                              "$ref": "#/components/schemas/registerUser"
+                              "oneOf": [
+                                {
+                                  "$ref": "#/components/schemas/registerUser"
+                                },
+                                {
+                                  "$ref": "#/components/schemas/patchUser"
+                                }
+                              ],
+                              "description": "User information including profile data."
                             }
                           }
                         }
@@ -187,11 +203,13 @@
                       "properties": {
                         "status": {
                           "type": "integer",
-                          "example": 200
+                          "example": 200,
+                          "description": "HTTP status code indicating the success of the operation."
                         },
                         "message": {
                           "type": "string",
-                          "example": "Succesfully loged in an user!"
+                          "example": "Successfully logged in the user!",
+                          "description": "Message confirming successful login."
                         },
                         "data": {
                           "type": "object",
@@ -202,10 +220,20 @@
                           "properties": {
                             "accessToken": {
                               "type": "string",
-                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO"
+                              "example": "YBi2qJZtTZxXKgWWiPj7GSMRFdCHNUFtwOq8ORqO",
+                              "description": "JWT token for authenticated sessions.",
+                              "pattern": "^[A-Za-z0-9\\-_\\.]+$"
                             },
                             "user": {
-                              "$ref": "#/components/schemas/patchUser"
+                              "oneOf": [
+                                {
+                                  "$ref": "#/components/schemas/registerUser"
+                                },
+                                {
+                                  "$ref": "#/components/schemas/patchUser"
+                                }
+                              ],
+                              "description": "User information including profile data."
                             }
                           }
                         }
@@ -217,10 +245,12 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/401",
+            "description": "Unauthorized - Invalid email or password."
           },
           "404": {
-            "$ref": "#/components/responses/404"
+            "$ref": "#/components/responses/404",
+            "description": "Not Found - User not found."
           }
         }
       }
@@ -1098,18 +1128,21 @@
           "_id": {
             "description": "User's id",
             "type": "string",
-            "example": "66e69d630a8a440495bed3cc"
+            "example": "66e69d630a8a440495bed3cc",
+            "pattern": "^[a-fA-F0-9]{24}$"
           },
           "email": {
             "description": "User's email",
             "type": "string",
             "format": "email",
-            "example": "user@gmail.com"
+            "example": "user@gmail.com",
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",
             "type": "string",
-            "example": "Masha"
+            "example": "Masha",
+            "maxLength": 100
           },
           "gender": {
             "description": "User's gender (optional, defaults to 'woman')",
@@ -1121,9 +1154,11 @@
             "example": "woman"
           },
           "dailyNorma": {
-            "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+            "description": "User's daily water consumption in liters (optional, defaults '1.5')",
             "type": "number",
-            "example": 1.5
+            "example": 1.5,
+            "minimum": 1,
+            "maximum": 10
           }
         }
       },
@@ -1133,18 +1168,21 @@
           "_id": {
             "description": "User's id",
             "type": "string",
-            "example": "66e69d630a8a440495bed3cc"
+            "example": "66e69d630a8a440495bed3cc",
+            "pattern": "^[a-fA-F0-9]{24}$"
           },
           "email": {
             "description": "User's email",
             "type": "string",
             "format": "email",
-            "example": "user@gmail.com"
+            "example": "user@gmail.com",
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
           },
           "name": {
             "description": "User's name (optional, defaults to 'User')",
             "type": "string",
-            "example": "Masha"
+            "example": "Masha",
+            "maxLength": 100
           },
           "gender": {
             "description": "User's gender (optional, defaults to 'woman')",
@@ -1156,24 +1194,30 @@
             "example": "woman"
           },
           "dailyNorma": {
-            "description": "User's dialy water consumption in liters(optional, defaults '1.5')",
+            "description": "User's daily water consumption in liters (optional, defaults '1.5')",
             "type": "number",
-            "example": 1.5
+            "example": 1.5,
+            "minimum": 1
           },
           "weight": {
             "description": "User's weight in kilograms",
             "type": "number",
-            "example": 65
+            "example": 65,
+            "minimum": 30,
+            "maximum": 300
           },
           "activeSportTime": {
-            "description": "User's  time of active participation in sports",
+            "description": "User's time of active participation in sports (hours per week)",
             "type": "number",
-            "example": 5
+            "example": 5,
+            "minimum": 1
           },
           "avatar": {
-            "description": " Link to user photo",
+            "description": "Link to user photo",
             "type": "string",
-            "format": "binary"
+            "format": "uri",
+            "example": "https://example.com/user-avatar.jpg",
+            "pattern": "^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$"
           }
         }
       },
@@ -1193,27 +1237,34 @@
             "description": "Backend-generated unique identifier for the water record.",
             "type": "string",
             "format": "objectId",
-            "example": "66a35382997eac73e992ae30"
+            "example": "66a35382997eac73e992ae30",
+            "pattern": "^[a-fA-F0-9]{24}$"
           },
           "amount": {
             "description": "The amount of water consumed (in liters).",
-            "type": "string",
-            "example": "1"
+            "type": "number",
+            "format": "float",
+            "example": 1,
+            "minimum": 0.05,
+            "maximum": 1000
           },
           "day": {
             "description": "The day of the water record (in format DD).",
             "type": "string",
-            "example": "05"
+            "example": "05",
+            "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
           },
           "month": {
             "description": "The month of the water record (in format MM).",
             "type": "string",
-            "example": "09"
+            "example": "09",
+            "pattern": "^(0[1-9]|1[0-2])$"
           },
           "year": {
             "description": "The year of the water record (in format YYYY).",
             "type": "string",
-            "example": "2024"
+            "example": "2024",
+            "pattern": "^\\d{4}$"
           },
           "time": {
             "description": "The time of the water record (in format HH:mm).",
@@ -1224,7 +1275,8 @@
             "description": "Unique identifier for the user who owns this water record.",
             "type": "string",
             "format": "objectId",
-            "example": "66c6fd636a79689916340fe7"
+            "example": "66c6fd636a79689916340fe7",
+            "pattern": "^[a-fA-F0-9]{24}$"
           }
         }
       }
