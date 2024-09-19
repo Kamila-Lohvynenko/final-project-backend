@@ -63,7 +63,7 @@ export const querySchemaDay = Joi.object({
 
 export const querySchemaMonth = Joi.object({
   month: Joi.string()
-    .pattern(/^([1-9]|1[0-2])$/)
+    .pattern(/^(0[1-9]|1[0-2])$/)
     .required()
     .messages({
       'string.pattern.base': 'Month must be a valid month (01-12).',
@@ -80,8 +80,8 @@ export const querySchemaMonth = Joi.object({
 
 export const updateWaterRecordValidationSchema = Joi.object({
   amount: Joi.number().min(0.05).max(10000),
-  day: Joi.string().pattern(/^([1-9]|[12]\d|3[01])$/),
-  month: Joi.string().pattern(/^([1-9]|1[0-2])$/),
+  day: Joi.string().pattern(/^(0[1-9]|[12]\d|3[01])$/),
+  month: Joi.string().pattern(/^(0[1-9]|1[0-2])$/),
   year: Joi.string().pattern(/^\d{4}$/),
   time: Joi.string().pattern(/^([0-1]\d|2[0-3]):([0-5]\d)$/),
 });

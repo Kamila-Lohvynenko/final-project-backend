@@ -18,7 +18,7 @@ const waterRecordSchema = new Schema(
       required: true,
       validate: {
         validator: function (v) {
-          return /^([1-9]|[12]\d|3[01])$/.test(v);
+          return /^(0[1-9]|[12]\d|3[01])$/.test(v);
         },
         message: 'Invalid day format (should be between 01 and 31)',
       },
@@ -28,7 +28,7 @@ const waterRecordSchema = new Schema(
       required: true,
       validate: {
         validator: function (v) {
-          return /^([1-9]|1[0-2])$/.test(v);
+          return /^(0[1-9]|1[0-2])$/.test(v);
         },
         message: 'Invalid month format (should be between 01 and 12)',
       },
