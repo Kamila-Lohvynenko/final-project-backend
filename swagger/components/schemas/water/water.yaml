@@ -15,12 +15,12 @@ properties:
     example: '66a35382997eac73e992ae30'
     pattern: '^[a-fA-F0-9]{24}$' 
   amount:
-    description: 'The amount of water consumed (in liters).'
+    description: 'The amount of water consumed (in milliliters).'
     type: number
     format: float  
-    example: 1
-    minimum: 0.05  
-    maximum: 10 
+    example: 250
+    minimum: 50
+    maximum: 10000 
   day:
     description: 'The day of the water record (in format DD).'
     type: string

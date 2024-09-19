@@ -18,12 +18,12 @@ requestBody:
           - time
         properties:
           amount:
-            description: 'The amount of water consumed (in liters).'
+            description: 'The amount of water consumed (in milliliters).'
             type: number
             format: float
-            example: 1.0
-            minimum: 0.05
-            maximum: 10.0
+            example: 250
+            minimum: 50
+            maximum: 10000
           day:
             description: 'The day of the water record (in format DD).'
             type: string

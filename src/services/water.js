@@ -1,3 +1,4 @@
+import { UsersCollection } from '../db/models/user.js';
 import { WaterCollection } from '../db/models/water.js';
 
 export const addWater = async (userData) => {
@@ -25,9 +26,24 @@ export const getWaterByDay = async (userId, day, month, year) => {
     month,
     year,
   });
-  console.log(records);
+  const totalWater = records.reduce((sum, record) => sum + record.amount, 0);
 
-  return records;
+  const user = await UsersCollection.findById(userId);
+
+  if (!user) {
+    throw new Error(404,'User not found');
+  }
+
+  const dailyNorma = user.dailyNorma * 1000;
+  const percentage = Math.round((totalWater / dailyNorma) * 100);
+
+return {
+  records, 
+  totalWater,
+  dailyNorma,
+  percentage: `${percentage}%`,
+};
+
 };
 
 export const getWaterByMonth = async (userId, month, year) => {
