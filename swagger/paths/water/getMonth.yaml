@@ -2,31 +2,34 @@ tags:
   - Water
 summary: 'Get water by month'
 operationId: getWaterByMonth
-description: 'Retrieve all water records for a specific month and year.'
+description: 'Get all the water for a certain month of the year.'
 security:
   - bearerAuth: []
-parameters:
-  - name: month
-    in: query
-    required: true
-    schema:
-      type: string
-      example: '09'
-      pattern: '^(0[1-9]|1[0-2])$'
-    description: 'The month for the water records (format MM). Must be a valid month (01-12).'
-  - name: year
-    in: query
-    required: true
-    schema:
-      type: string
-      example: '2024'
-      pattern: '^\d{4}$'
-    description: 'The year for the water records (format YYYY). Must be a valid year (4 digits).'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - month
+          - year
+        properties:
+          month:
+            description: 'The month of the water record (in format MM).'
+            type: string
+            example: '09'
+            pattern: '^(0[1-9]|1[0-2])$'
+          year:
+            description: 'The year of the water record (in format YYYY).'
+            type: string
+            example: '2024'
+            pattern: '^\d{4}$'
+  description: 'Details to get a water record by month.'
 responses:
   '200':
     $ref: ../../components/responses/water/200.yaml
   '404':
-    description: 'Water records not found for the specified month and year.'
+    description: 'Water records not found for the specified month.'
     content:
       application/json:
         schema:

@@ -4,18 +4,18 @@ import { THIRTY_DAYS } from '../constans/index.js';
 
 
 const setupSession = (res, session) => {
-    res.cookie("refreshToken", session.refreshToken, {
+    res.cookie('refreshToken', session.refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + THIRTY_DAYS),
     });
-    res.cookie("sessionId", session._id, {
+    res.cookie('sessionId', session._id, {
         httpOnly: true,
         expires: new Date(Date.now() + THIRTY_DAYS),
     });
 };
 
 
-export const getOAuthUrlController = async (req, res, next) => {
+export const getOAuthUrlController = async (req, res) => {
     const url = generateAuthUrl();
     res.json({
         status: 200,
@@ -26,7 +26,7 @@ export const getOAuthUrlController = async (req, res, next) => {
     });
 }
 
-export const confirmOAuthController = async (req, res, next) => {
+export const confirmOAuthController = async (req, res) => {
     const session = await loginOrSignupWithGoogle(req.body.code);
     setupSession(res, session);
 

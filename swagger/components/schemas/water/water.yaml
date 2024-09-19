@@ -15,37 +15,32 @@ properties:
     example: '66a35382997eac73e992ae30'
     pattern: '^[a-fA-F0-9]{24}$' 
   amount:
-   description: 'The amount of water consumed (in liters).'
-   type: number
-   format: float  
-   example: 1
-   minimum: 0.05  
-   maximum: 1000  
-
-
+    description: 'The amount of water consumed (in liters).'
+    type: number
+    format: float  
+    example: 1
+    minimum: 0.05  
+    maximum: 10 
   day:
     description: 'The day of the water record (in format DD).'
     type: string
     example: '05'
     pattern: '^(0[1-9]|[12][0-9]|3[01])$' 
-
   month:
     description: 'The month of the water record (in format MM).'
     type: string
     example: '09'
     pattern: '^(0[1-9]|1[0-2])$' 
-
   year:
     description: 'The year of the water record (in format YYYY).'
     type: string
     example: '2024'
     pattern: '^\d{4}$' 
-
   time:
     description: 'The time of the water record (in format HH:mm).'
     type: string
     example: '12:30'
-
+    pattern: '^([0-1]\d|2[0-3]):([0-5]\d)$'
   userId:
     description: 'Unique identifier for the user who owns this water record.'
     type: string

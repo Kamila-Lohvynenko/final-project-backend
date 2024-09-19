@@ -1,8 +1,8 @@
 tags:
   - Water
-summary: 'Update water by ID'
+summary: 'Edit a water by id'
 operationId: editWater
-description: 'Update a water record by its unique identifier.'
+description: 'Edit a water record by unique identifier.'
 security:
   - bearerAuth: []
 parameters:
@@ -13,7 +13,7 @@ parameters:
       type: string
       format: objectId
       example: '66a35382997eac73e992ae30'
-    description: 'The unique ID of the water record to update.'
+    description: 'The unique ID of the water record to edit.'
 requestBody:
   content:
     application/json:
@@ -48,10 +48,10 @@ requestBody:
             example: '12:30'
             pattern: '^([0-1]\d|2[0-3]):([0-5]\d)$'
         additionalProperties: false
-  description: 'Fields to be updated for the water record. Only the fields provided will be updated.'
+  description: 'Fields to be edited for the water record. Only the fields provided will be edited.'
 responses:
   '200':
-    description: 'Successfully updated the water record.'
+    description: 'Successfully edited the water record.'
     content:
       application/json:
         schema:
@@ -66,15 +66,15 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully updated the water record!'
+              example: 'Successfully edited the water record!'
             data:
               type: object
               $ref: '../../../components/schemas/water/water.yaml'
   '400':
     $ref: '../../../components/responses/water/400.yaml'
   '401':
-    $ref: '../../../components/responses/water/401.yaml'
+    $ref: '../../../components/responses/water/401-1.yaml'
   '404':
-    $ref: '../../../components/responses/water/404.yaml'
+    $ref: '../../../components/responses/water/404-4.yaml'
   '500':
-    $ref: '../../../components/responses/water/500.yaml'
+    $ref: '../../../components/responses/water/500-0.yaml'

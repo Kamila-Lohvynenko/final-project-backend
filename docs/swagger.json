@@ -2,12 +2,12 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Water app",
+    "title": "AquaTrack app",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "This is a documentation of water's app"
+    "description": "This is a documentation of AquaTrack app"
   },
   "servers": [
     {
@@ -695,55 +695,55 @@
         "tags": [
           "Water"
         ],
-        "summary": "Get water by date",
+        "summary": "Get water by day",
         "operationId": "getWaterByDay",
-        "description": "Retrieve all water records for a specific date by day, month, and year.",
+        "description": "Get all the water for a specific day of the month and year.",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "day",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "15",
-              "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
-            },
-            "description": "The day of the record (format DD). Must be a valid day (01-31)."
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "day",
+                  "month",
+                  "year"
+                ],
+                "properties": {
+                  "day": {
+                    "description": "The day of the water record (in format DD).",
+                    "type": "string",
+                    "example": "05",
+                    "pattern": "^(0[1-9]|[12][0-9]|3[01])$"
+                  },
+                  "month": {
+                    "description": "The month of the water record (in format MM).",
+                    "type": "string",
+                    "example": "09",
+                    "pattern": "^(0[1-9]|1[0-2])$"
+                  },
+                  "year": {
+                    "description": "The year of the water record (in format YYYY).",
+                    "type": "string",
+                    "example": "2024",
+                    "pattern": "^\\d{4}$"
+                  }
+                }
+              }
+            }
           },
-          {
-            "name": "month",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "09",
-              "pattern": "^(0[1-9]|1[0-2])$"
-            },
-            "description": "The month of the record (format MM). Must be a valid month (01-12)."
-          },
-          {
-            "name": "year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2024",
-              "pattern": "^\\d{4}$"
-            },
-            "description": "The year of the record (format YYYY). Must be a valid year (4 digits)."
-          }
-        ],
+          "description": "Details to get a water record by day."
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/200"
           },
           "404": {
-            "description": "Water records not found for the specified date.",
+            "description": "Water records not found for the specified day.",
             "content": {
               "application/json": {
                 "schema": {
@@ -760,7 +760,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "No water records found for the specified date!"
+                      "example": "Day, month and year are required!"
                     },
                     "data": {
                       "type": "object",
@@ -781,42 +781,46 @@
         ],
         "summary": "Get water by month",
         "operationId": "getWaterByMonth",
-        "description": "Retrieve all water records for a specific month and year.",
+        "description": "Get all the water for a certain month of the year.",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "month",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "09",
-              "pattern": "^(0[1-9]|1[0-2])$"
-            },
-            "description": "The month for the water records (format MM). Must be a valid month (01-12)."
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "month",
+                  "year"
+                ],
+                "properties": {
+                  "month": {
+                    "description": "The month of the water record (in format MM).",
+                    "type": "string",
+                    "example": "09",
+                    "pattern": "^(0[1-9]|1[0-2])$"
+                  },
+                  "year": {
+                    "description": "The year of the water record (in format YYYY).",
+                    "type": "string",
+                    "example": "2024",
+                    "pattern": "^\\d{4}$"
+                  }
+                }
+              }
+            }
           },
-          {
-            "name": "year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "2024",
-              "pattern": "^\\d{4}$"
-            },
-            "description": "The year for the water records (format YYYY). Must be a valid year (4 digits)."
-          }
-        ],
+          "description": "Details to get a water record by month."
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/200"
           },
           "404": {
-            "description": "Water records not found for the specified month and year.",
+            "description": "Water records not found for the specified month.",
             "content": {
               "application/json": {
                 "schema": {
@@ -945,10 +949,10 @@
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "$ref": "#/components/responses/401-2"
+            "$ref": "#/components/responses/401-1"
           },
           "500": {
-            "$ref": "#/components/responses/500-2"
+            "$ref": "#/components/responses/500-0"
           }
         }
       }
@@ -958,9 +962,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Update water by ID",
+        "summary": "Edit a water by id",
         "operationId": "editWater",
-        "description": "Update a water record by its unique identifier.",
+        "description": "Edit a water record by unique identifier.",
         "security": [
           {
             "bearerAuth": []
@@ -976,7 +980,7 @@
               "format": "objectId",
               "example": "66a35382997eac73e992ae30"
             },
-            "description": "The unique ID of the water record to update."
+            "description": "The unique ID of the water record to edit."
           }
         ],
         "requestBody": {
@@ -1022,11 +1026,11 @@
               }
             }
           },
-          "description": "Fields to be updated for the water record. Only the fields provided will be updated."
+          "description": "Fields to be edited for the water record. Only the fields provided will be edited."
         },
         "responses": {
           "200": {
-            "description": "Successfully updated the water record.",
+            "description": "Successfully edited the water record.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1043,7 +1047,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully updated the water record!"
+                      "example": "Successfully edited the water record!"
                     },
                     "data": {
                       "type": "object",
@@ -1058,13 +1062,13 @@
             "$ref": "#/components/responses/400"
           },
           "401": {
-            "$ref": "#/components/responses/401-2"
+            "$ref": "#/components/responses/401-1"
           },
           "404": {
-            "$ref": "#/components/responses/404-2"
+            "$ref": "#/components/responses/404-4"
           },
           "500": {
-            "$ref": "#/components/responses/500-2"
+            "$ref": "#/components/responses/500-0"
           }
         }
       },
@@ -1072,9 +1076,9 @@
         "tags": [
           "Water"
         ],
-        "summary": "Delete water by id",
+        "summary": "Delete a water by id",
         "operationId": "deleteWater",
-        "description": "Delete water by unique identifier",
+        "description": "Delete a water by unique identifier",
         "security": [
           {
             "bearerAuth": []
@@ -1090,7 +1094,7 @@
               "format": "objectId",
               "example": "66c6fd636a79689916340fe7"
             },
-            "description": "The ID of the water to delete"
+            "description": "The unique ID of the water to delete"
           }
         ],
         "responses": {
@@ -1098,13 +1102,13 @@
             "description": "Successful operation - No Content. The water was deleted successfully."
           },
           "401": {
-            "$ref": "#/components/responses/401-2"
+            "$ref": "#/components/responses/401-1"
           },
           "404": {
-            "$ref": "#/components/responses/404-2"
+            "$ref": "#/components/responses/404-4"
           },
           "500": {
-            "$ref": "#/components/responses/500-2"
+            "$ref": "#/components/responses/500-0"
           }
         }
       }
@@ -1197,20 +1201,22 @@
             "description": "User's daily water consumption in liters (optional, defaults '1.5')",
             "type": "number",
             "example": 1.5,
-            "minimum": 1
+            "minimum": 1,
+            "maximum": 10
           },
           "weight": {
             "description": "User's weight in kilograms",
             "type": "number",
             "example": 65,
-            "minimum": 30,
-            "maximum": 300
+            "minimum": 1,
+            "maximum": 500
           },
           "activeSportTime": {
             "description": "User's time of active participation in sports (hours per week)",
             "type": "number",
             "example": 5,
-            "minimum": 1
+            "minimum": 1,
+            "maximum": 24
           },
           "avatar": {
             "description": "Link to user photo",
@@ -1246,7 +1252,7 @@
             "format": "float",
             "example": 1,
             "minimum": 0.05,
-            "maximum": 1000
+            "maximum": 10
           },
           "day": {
             "description": "The day of the water record (in format DD).",
@@ -1269,7 +1275,8 @@
           "time": {
             "description": "The time of the water record (in format HH:mm).",
             "type": "string",
-            "example": "12:30"
+            "example": "12:30",
+            "pattern": "^([0-1]\\d|2[0-3]):([0-5]\\d)$"
           },
           "userId": {
             "description": "Unique identifier for the user who owns this water record.",
@@ -1427,7 +1434,7 @@
           }
         }
       },
-      "401-2": {
+      "401-1": {
         "description": "Unauthorized error",
         "content": {
           "application/json": {
@@ -1464,7 +1471,7 @@
           }
         }
       },
-      "500-2": {
+      "500-0": {
         "description": "Internal server error",
         "content": {
           "application/json": {
@@ -1488,7 +1495,7 @@
           }
         }
       },
-      "404-2": {
+      "404-4": {
         "description": "Water not found!",
         "content": {
           "application/json": {
