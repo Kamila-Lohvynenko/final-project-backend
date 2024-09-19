@@ -1,40 +1,42 @@
 tags:
   - Water
-summary: 'Get water by date'
+summary: 'Get water by day'
 operationId: getWaterByDay
-description: 'Retrieve all water records for a specific date by day, month, and year.'
+description: 'Get all the water for a specific day of the month and year.'
 security:
   - bearerAuth: []
-parameters:
-  - name: day
-    in: query
-    required: true
-    schema:
-      type: string
-      example: '15'
-      pattern: '^(0[1-9]|[12][0-9]|3[01])$'
-    description: 'The day of the record (format DD). Must be a valid day (01-31).'
-  - name: month
-    in: query
-    required: true
-    schema:
-      type: string
-      example: '09'
-      pattern: '^(0[1-9]|1[0-2])$'
-    description: 'The month of the record (format MM). Must be a valid month (01-12).'
-  - name: year
-    in: query
-    required: true
-    schema:
-      type: string
-      example: '2024'
-      pattern: '^\d{4}$'
-    description: 'The year of the record (format YYYY). Must be a valid year (4 digits).'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - day
+          - month
+          - year
+        properties:
+          day:
+            description: 'The day of the water record (in format DD).'
+            type: string
+            example: '05'
+            pattern: '^(0[1-9]|[12][0-9]|3[01])$'
+          month:
+            description: 'The month of the water record (in format MM).'
+            type: string
+            example: '09'
+            pattern: '^(0[1-9]|1[0-2])$'
+          year:
+            description: 'The year of the water record (in format YYYY).'
+            type: string
+            example: '2024'
+            pattern: '^\d{4}$'
+  description: 'Details to get a water record by day.'
+
 responses:
   '200':
     $ref: ../../components/responses/water/200.yaml
   '404':
-    description: 'Water records not found for the specified date.'
+    description: 'Water records not found for the specified day.'
     content:
       application/json:
         schema:
@@ -49,7 +51,7 @@ responses:
               example: 404
             message:
               type: string
-              example: 'No water records found for the specified date!'
+              example: 'Day, month and year are required!'
             data:
               type: object
               example: {}

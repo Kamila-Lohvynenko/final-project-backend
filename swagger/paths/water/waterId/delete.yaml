@@ -1,8 +1,8 @@
 tags:
   - Water
-summary: 'Delete water by id'
+summary: 'Delete a water by id'
 operationId: deleteWater
-description: 'Delete water by unique identifier'
+description: 'Delete a water by unique identifier'
 security:
   - bearerAuth: []
 parameters:
@@ -13,13 +13,13 @@ parameters:
       type: string
       format: objectId
       example: '66c6fd636a79689916340fe7'
-    description: 'The ID of the water to delete'
+    description: 'The unique ID of the water to delete'
 responses:
   '204':
     description: 'Successful operation - No Content. The water was deleted successfully.'
   '401':
-    $ref: ../../../components/responses/water/401.yaml
+    $ref: ../../../components/responses/water/401-1.yaml
   '404':
-    $ref: ../../../components/responses/water/404.yaml
+    $ref: ../../../components/responses/water/404-4.yaml
   '500':
-    $ref: ../../../components/responses/water/500.yaml
+    $ref: ../../../components/responses/water/500-0.yaml

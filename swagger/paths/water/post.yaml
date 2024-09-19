@@ -69,6 +69,6 @@ responses:
   '400':
     $ref: ../../components/responses/water/400.yaml
   '401':
-    $ref: ../../components/responses/water/401.yaml
+    $ref: ../../components/responses/water/401-1.yaml
   '500':
-    $ref: ../../components/responses/water/500.yaml
+    $ref: ../../components/responses/water/500-0.yaml
