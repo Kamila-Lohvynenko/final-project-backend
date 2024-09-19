@@ -6,7 +6,7 @@ import {
   registerUser,
   updateDataUser,
 } from '../services/auth.js';
-import { THIRTY_DAYS } from '../constans/index.js';
+// import { THIRTY_DAYS } from '../constans/index.js';
 import { setSessionCookies } from '../utils/setSessionCookies.js';
 import createHttpError from 'http-errors';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
