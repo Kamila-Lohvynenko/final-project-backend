@@ -31,19 +31,18 @@ export const getWaterByDay = async (userId, day, month, year) => {
   const user = await UsersCollection.findById(userId);
 
   if (!user) {
-    throw new Error(404,'User not found');
+    throw new Error(404, 'User not found');
   }
 
-  const dailyNorma = user.dailyNorma * 1000;
+  const dailyNorma = user.dailyNorma;
   const percentage = Math.round((totalWater / dailyNorma) * 100);
 
-return {
-  records, 
-  totalWater,
-  dailyNorma,
-  percentage: `${percentage}%`,
-};
-
+  return {
+    records,
+    totalWater,
+    dailyNorma,
+    percentage: `${percentage}%`,
+  };
 };
 
 export const getWaterByMonth = async (userId, month, year) => {
