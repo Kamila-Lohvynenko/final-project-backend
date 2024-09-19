@@ -7,18 +7,18 @@ properties:
     description: "User's id"
     type: string
     example: '66e69d630a8a440495bed3cc'
-    pattern: '^[a-fA-F0-9]{24}$'  
+    pattern: '^[a-fA-F0-9]{24}$'
+  name:
+    description: "User's name (optional, defaults to 'User')"
+    type: string
+    example: 'Masha'
+    maxLength: 100
   email:
     description: "User's email"
     type: string
     format: email
     example: 'user@gmail.com'
-    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'  
-  name:
-    description: "User's name (optional, defaults to 'User')"
-    type: string
-    example: 'Masha'
-    maxLength: 100  
+    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
   gender:
     description: "User's gender (optional, defaults to 'woman')"
     type: string
@@ -26,9 +26,21 @@ properties:
       - 'woman'
       - 'man'
     example: 'woman'
+  weight:
+    description: "User's weight (optional, defaults to '50')"
+    type: number
+    example: 50
+    minimum: 0
+    maximum: 500
+  activeSportTime:
+    description: "User's time of active participation in sports (hours per week)"
+    type: number
+    example: 5
+    minimum: 1
+    maximum: 24
   dailyNorma:
     description: "User's daily water consumption in liters (optional, defaults '1.5')"
     type: number
     example: 1.5
-    minimum: 1 
-    maximum: 10  
+    minimum: 1
+    maximum: 10
