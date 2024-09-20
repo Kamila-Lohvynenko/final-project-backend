@@ -6,10 +6,11 @@ import {
   registerUser,
   updateDataUser,
 } from '../services/auth.js';
-// import { THIRTY_DAYS } from '../constans/index.js';
 import { setSessionCookies } from '../utils/setSessionCookies.js';
 import createHttpError from 'http-errors';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import * as fs from 'node:fs/promises';
+import path from 'node:path';
+import { uploadToCloudinary } from './../utils/uploadToCloudinary.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -77,15 +78,24 @@ export const updateDataUserController = async (req, res) => {
   const userId = req.user._id;
   const avatar = req.file;
 
-  let avatarUrl;
+  let photo;
 
-  if (avatar) {
-    avatarUrl = await saveFileToUploadDir(avatar);
+  if (typeof avatar !== 'undefined') {
+    if (process.env.ENABLE_CLOUDINARY === 'true') {
+      const result = await uploadToCloudinary(req.file.path);
+      await fs.unlink(req.file.path);
+
+      photo = result.secure_url;
+    } else {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src', 'public', 'userAvatars', req.file.filename),
+      );
+      photo = `${process.env.APP_DOMAIN}/contactAvatars/${req.file.filename}`;
+    }
   }
-  const payload = {
-    ...req.body,
-    avatar: avatarUrl,
-  };
+  const payload = { ...req.body, avatar: photo };
+
   const result = await updateDataUser(userId, payload);
 
   if (!result) {
