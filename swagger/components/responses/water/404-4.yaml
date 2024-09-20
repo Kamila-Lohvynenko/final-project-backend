@@ -1,5 +1,5 @@
 
-description: 'Water not found!'
+description: 'Water record not found!'
 content:
   application/json:
     schema:
@@ -7,7 +7,6 @@ content:
       required:
         - status
         - message
-        - data
       properties:
         status:
           type: integer
@@ -15,6 +14,3 @@ content:
         message:
           type: string
           example: 'Water not found!'
-        data:
-          type: object
-          example: {} 

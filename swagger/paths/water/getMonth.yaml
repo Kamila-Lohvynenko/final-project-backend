@@ -27,9 +27,7 @@ requestBody:
   description: 'Details to get a water record by month.'
 responses:
   '200':
-    $ref: ../../components/responses/water/200.yaml
-  '404':
-    description: 'Water records not found for the specified month.'
+    description: 'Successfully fetched the water consumption data for the month.'
     content:
       application/json:
         schema:
@@ -41,10 +39,29 @@ responses:
           properties:
             status:
               type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully fetched the water consumption data!'
+            data:
+              type: array
+              $ref: ../../components/schemas/water/water.yaml       
+              description: 'List of water intake records for the specified month.' 
+  '404':
+    description: 'User not found or month, year are missing.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
               example: 404
             message:
               type: string
               example: 'Month and year are required!'
-            data:
-              type: object
-              example: {}
+  '500':
+    $ref: ../../components/responses/water/500-0.yaml

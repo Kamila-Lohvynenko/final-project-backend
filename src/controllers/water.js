@@ -13,7 +13,7 @@ export const addWaterController = async (req, res) => {
     const { amount, day, month, year, time } = req.body;
 
     if (!amount || !day || !month || !year || !time) {
-      throw new Error('All fields are required');
+      throw createHttpError(404, 'All fields are required');
     }
 
     const addedWater = await addWater(userId, amount, day, month, year, time);
@@ -44,7 +44,7 @@ export const editWaterController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully updated the water!',
+    message: 'Successfully edit the water record!',
     data: result,
   });
 };
@@ -97,7 +97,7 @@ export const getWaterByMonthController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully update the water!',
+    message: 'Successfully fetched the water consumption data!',
     data: result,
   });
 };

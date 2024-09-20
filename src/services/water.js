@@ -23,7 +23,7 @@ export const addWater = async (userId, amount, day, month, year, time) => {
   inputDate.setHours(0, 0, 0, 0);
 
   if (inputDate.toDateString() !== currentDate.toDateString()) {
-    throw new Error("You can only add water for today's date");
+    throw new Error('You can only add water for today date');
   }
   const waterRecord = await WaterCollection.create({
     userId,

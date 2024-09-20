@@ -17,8 +17,6 @@ parameters:
 responses:
   '204':
     description: 'Successful operation - No Content. The water was deleted successfully.'
-  '401':
-    $ref: ../../../components/responses/water/401-1.yaml
   '404':
     $ref: ../../../components/responses/water/404-4.yaml
   '500':
