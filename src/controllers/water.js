@@ -7,19 +7,16 @@ import {
   getWaterByMonth,
 } from '../services/water.js';
 
-export const addWaterController = async (req, res, next) => {
+export const addWaterController = async (req, res) => {
   try {
     const userId = req.user._id;
-    const userData = { ...req.body, userId };
+    const { amount, day, month, year, time } = req.body;
 
-    const addedWater = await addWater(userData);
-
-    if (!addedWater) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Failed to add water record',
-      });
+    if (!amount || !day || !month || !year || !time) {
+      throw new Error('All fields are required');
     }
+
+    const addedWater = await addWater(userId, amount, day, month, year, time);
 
     res.status(201).json({
       status: 201,
@@ -27,7 +24,11 @@ export const addWaterController = async (req, res, next) => {
       data: addedWater,
     });
   } catch (error) {
-    next(error);
+
+    res.status(400).json({
+      status: 400,
+      message: error.message 
+    });
   }
 };
 
