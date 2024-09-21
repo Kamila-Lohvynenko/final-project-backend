@@ -1,0 +1,31 @@
+tags:
+  - Google OAuth
+summary: 'Get Google OAuth URL'
+description: 'Generates a URL for user authentication via Google.'
+security: []
+responses:
+  '200':
+    description: 'Successfully retrieved Google OAuth URL'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - status
+           - message
+           - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully get Google OAuth url!'
+            data:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'https://accounts.google.com/o/oauth2/v2/auth'
+  '500':
+    $ref: ../../components/responses/water/500-0.yaml
