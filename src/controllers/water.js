@@ -24,10 +24,9 @@ export const addWaterController = async (req, res) => {
       data: addedWater,
     });
   } catch (error) {
-
     res.status(400).json({
       status: 400,
-      message: error.message 
+      message: error.message,
     });
   }
 };
@@ -58,7 +57,7 @@ export const deleteWaterController = async (req, res, next) => {
   if (!deletedWater) {
     next(createHttpError(404, 'Water not found!'));
   }
-  res.status(204).send();
+  res.status(200).send({ status: 200, data: { id } });
 };
 
 export const getWaterByDayController = async (req, res) => {
@@ -76,10 +75,10 @@ export const getWaterByDayController = async (req, res) => {
     status: 200,
     message: 'Successfully fetched the water consumption data!',
     resultData: {
-      records: data.records,        
-      totalWater: data.totalWater,  
-      dailyNorma: data.dailyNorma,  
-      percentage: data.percentage,  
+      records: data.records,
+      totalWater: data.totalWater,
+      dailyNorma: data.dailyNorma,
+      percentage: data.percentage,
     },
   });
 };
@@ -89,7 +88,6 @@ export const getWaterByMonthController = async (req, res) => {
   const { month, year } = req.body;
 
   if (!month || !year) {
-   
     throw createHttpError(404, 'Month and year are required!');
   }
 
