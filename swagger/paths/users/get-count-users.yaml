@@ -1,0 +1,29 @@
+tags:
+  - Users
+summary: Get total number of registered users
+operationId: getUsersCount
+description: 'Returns the total number of registered users in the application'
+security: []
+responses:
+  '200':
+    description: Successful operation, returns the total number of users
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully got total number of registered users!'
+            data:
+              type: integer
+              example: 76
+  '500':
+    $ref: ../../components/responses/users/500.yaml

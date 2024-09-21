@@ -39,6 +39,9 @@ paths:
   /users/avatar:
     patch:
       $ref: ../swagger/paths/users/avatar/patch.yaml
+  /users/count:
+    get:
+      $ref: ../swagger/paths/users/get-count-users.yaml
       
   /water/day:
     post:

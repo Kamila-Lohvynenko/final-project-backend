@@ -1,5 +1,6 @@
 import {
   getCurrentUser,
+  getUsersCount,
   loginUser,
   logoutUser,
   refreshUsersSession,
@@ -106,5 +107,15 @@ export const updateDataUserController = async (req, res) => {
     status: 200,
     message: 'Successfully patched a user!',
     data: result.user,
+  });
+};
+
+export const getUserCountController = async (req, res) => {
+  const totalUsers = await getUsersCount();
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully got total number of registered users!',
+    data: totalUsers, 
   });
 };

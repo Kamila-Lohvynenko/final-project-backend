@@ -138,3 +138,9 @@ export const updateDataUser = async (userId, payload, options = {}) => {
     isNew: Boolean(result?.lastErrorObject?.upserted),
   };
 };
+
+export const getUsersCount = async () => {
+
+const count = await UsersCollection.countDocuments();
+return count;
+};
