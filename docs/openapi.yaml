@@ -11,6 +11,8 @@ tags:
     description: Operations about water.
   - name: Users
     description: Auth operations.
+  - name: Google OAuth
+    description: Operations related to Google OAuth authentication.
 servers:
   - url: https://final-project-backend-1-tzfm.onrender.com/
   - url: http://localhost:8080
@@ -52,6 +54,14 @@ paths:
       $ref: ../swagger/paths/water/waterId/edit.yaml
     delete:
       $ref: ../swagger/paths/water/waterId/delete.yaml
+
+  /users/get-oauth-url:
+    get:
+      $ref: ../swagger/paths/google-o-auth/getUrl.yaml
+  /users/confirm-oauth:
+    post:
+      $ref: ../swagger/paths/google-o-auth/postConfirm.yaml
+
 components:
   securitySchemes:
     bearerAuth:

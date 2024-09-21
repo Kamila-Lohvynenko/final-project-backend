@@ -1,0 +1,78 @@
+tags:
+  - Google OAuth
+summary: 'Confirm Google OAuth code'
+description: 'Confirms the OAuth code received from Google and creates a user session.'
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            type: string
+            description: 'The code received from Google after successful authorization'
+            example: 4/0AY0e-g7...
+responses:
+  '200':
+    description: 'Successfully logged in via Google OAuth'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - status
+           - message
+           - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in via Google OAuth!'
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  description: 'The access token for the session'
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  '400':
+    description: 'Bad Request – Missing or malformed request data'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - status
+           - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Missing or invalid request data'
+  '401':
+    description: 'Unauthorized – Invalid or expired Google OAuth code'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - status
+           - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Invalid or expired Google OAuth code'
+  '500':
+    $ref: ../../components/responses/water/500-0.yaml
+                
