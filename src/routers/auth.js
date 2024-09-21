@@ -2,7 +2,7 @@ import express from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import { confirmOAuthSchema, loginUserSchema, registerUserSchema, requestResetEmailSchema, resetPasswordSchema, updateDataUserSchema } from '../validation/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js'
-import { getUserCurrentUserController, loginUserController, logoutUserController, refreshUserSessionController, registerUserController, updateDataUserController } from '../controllers/auth.js';
+import { getUserCurrentUserController, loginUserController, logoutUserController, refreshUserSessionController, registerUserController, updateDataUserController, getUserCountController } from '../controllers/auth.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/multer.js';
 import { requestResetEmailController, resetPasswordComtroller } from '../controllers/reset-password.js';
@@ -33,5 +33,6 @@ router.get('/get-oauth-url', ctrlWrapper(getOAuthUrlController));
 
 router.post('/confirm-oauth', jsonParser, validateBody(confirmOAuthSchema), ctrlWrapper(confirmOAuthController));
 
+router.get('/count', ctrlWrapper(getUserCountController));
 
 export default router;
