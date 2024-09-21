@@ -47,7 +47,7 @@ requestBody:
   description: 'Details to create a water record.'
 responses:
   '201':
-    description: 'Successful operation'
+    description: 'Water intake record successfully created'
     content:
       application/json:
         schema:
@@ -62,13 +62,39 @@ responses:
               example: 201
             message:
               type: string
-              example: 'Successfully added the water!'
+              example: 'Successfully added water!'
             data:
               type: object
               $ref: ../../components/schemas/water/water.yaml
+              description: 'Water record object.' 
   '400':
-    $ref: ../../components/responses/water/400.yaml
-  '401':
-    $ref: ../../components/responses/water/401-1.yaml
+    description: 'Bad request, invalid input data.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'You can only add water for today date.'
+  '404':
+    description: 'Missing required fields.'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'All fields are required.'
   '500':
     $ref: ../../components/responses/water/500-0.yaml

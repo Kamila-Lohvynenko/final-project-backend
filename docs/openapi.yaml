@@ -39,17 +39,17 @@ paths:
       $ref: ../swagger/paths/users/avatar/patch.yaml
       
   /water/day:
-    get:
+    post:
       $ref: ../swagger/paths/water/getDay.yaml
   /water/month:
-    get:
+    post:
       $ref: ../swagger/paths/water/getMonth.yaml
   /water:    
     post:
       $ref: ../swagger/paths/water/post.yaml
   /water/{id}:
     patch:
-      $ref: ../swagger/paths/water/waterId/update.yaml
+      $ref: ../swagger/paths/water/waterId/edit.yaml
     delete:
       $ref: ../swagger/paths/water/waterId/delete.yaml
 components:

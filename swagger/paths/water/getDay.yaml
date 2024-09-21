@@ -31,12 +31,9 @@ requestBody:
             example: '2024'
             pattern: '^\d{4}$'
   description: 'Details to get a water record by day.'
-
 responses:
   '200':
-    $ref: ../../components/responses/water/200.yaml
-  '404':
-    description: 'Water records not found for the specified day.'
+    description: 'Successfully fetched the water consumption data.'
     content:
       application/json:
         schema:
@@ -44,7 +41,42 @@ responses:
           required:
             - status
             - message
-            - data
+            - resultData
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully fetched the water consumption data!'
+            resultData:
+              type: object
+              properties:
+                records:
+                  type: array
+                  description: 'List of water intake records for the day.'
+                  $ref: ../../components/schemas/water/water.yaml
+                totalWater:
+                  type: number
+                  description: 'Total water intake for the day in milliliters.'
+                  example: 1500
+                dailyNorma:
+                  type: number
+                  description: 'User daily water intake goal in milliliters.'
+                  example: 2000
+                percentage:
+                  type: string
+                  description: 'Percentage of daily water intake goal met.'
+                  example: '75%'
+  '404':
+    description: 'User not found or day, month, year are missing.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
           properties:
             status:
               type: integer
@@ -52,6 +84,5 @@ responses:
             message:
               type: string
               example: 'Day, month and year are required!'
-            data:
-              type: object
-              example: {}
+  '500':
+    $ref: ../../components/responses/water/500-0.yaml

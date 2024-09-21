@@ -51,7 +51,7 @@ requestBody:
   description: 'Fields to be edited for the water record. Only the fields provided will be edited.'
 responses:
   '200':
-    description: 'Successfully edited the water record.'
+    description: 'Water intake record successfully updated.'
     content:
       application/json:
         schema:
@@ -66,15 +66,25 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully edited the water record!'
+              example: 'Successfully edit the water record!'
             data:
               type: object
-              $ref: '../../../components/schemas/water/water.yaml'
+              description: 'Updated water record object.'
+              $ref: ../../../components/schemas/water/water.yaml
   '400':
-    $ref: '../../../components/responses/water/400.yaml'
-  '401':
-    $ref: '../../../components/responses/water/401-1.yaml'
+    description: 'Invalid input data for the update request.'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Invalid input data.'
   '404':
-    $ref: '../../../components/responses/water/404-4.yaml'
+    $ref: ../../../components/responses/water/404-4.yaml
   '500':
-    $ref: '../../../components/responses/water/500-0.yaml'
+    $ref: ../../../components/responses/water/500-0.yaml
