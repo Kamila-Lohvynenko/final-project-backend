@@ -16,7 +16,7 @@ tags:
 servers:
   - url: https://final-project-backend-1-tzfm.onrender.com/
   - url: http://localhost:8080
-  
+
 paths:
   /users/register:
     post:
@@ -42,14 +42,20 @@ paths:
   /users/count:
     get:
       $ref: ../swagger/paths/users/get-count-users.yaml
-      
+  /users/send-reset-email:
+    post:
+      $ref: ../swagger/paths/users/reset-password/send-email-post.yaml
+  /users/reset-pwd:
+    post:
+      $ref: ../swagger/paths/users/reset-password/reset-pwd-post.yaml
+
   /water/day:
     post:
       $ref: ../swagger/paths/water/getDay.yaml
   /water/month:
     post:
       $ref: ../swagger/paths/water/getMonth.yaml
-  /water:    
+  /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
   /water/{id}:

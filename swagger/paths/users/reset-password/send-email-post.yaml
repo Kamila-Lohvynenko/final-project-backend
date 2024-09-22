@@ -1,0 +1,46 @@
+tags:
+  - Users
+summary: Request a password reset email
+operationId: requestResetEmail
+description: This endpoint sends a password reset email to the specified user if the email exists in the database.
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+        properties:
+          email:
+            description: "User's email address"
+            type: string
+            format: email
+            example: 'user@example.com'
+            pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$' # Проверка формата email
+responses:
+  '200':
+    description: Email successfully sent
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - message
+            - status
+            - data
+          properties:
+            message:
+              type: string
+              example: 'Reset password email was successfully sent!'
+              description: 'Message indicating that the email was sent successfully.'
+            status:
+              type: integer
+              example: 200
+              description: 'HTTP status code indicating success'
+            data:
+              type: object
+              example: {}
+  '404':
+    $ref: '../../../components/responses/users/404.yaml'
+  '500':
+    $ref: '../../../components/responses/users/500.yaml'

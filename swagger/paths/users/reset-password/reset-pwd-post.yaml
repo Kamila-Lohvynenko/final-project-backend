@@ -1,0 +1,54 @@
+tags:
+  - Users
+summary: Reset user's password
+operationId: resetPassword
+description: This endpoint resets the user's password using the provided reset token.
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - token
+          - password
+        properties:
+          token:
+            type: string
+            description: 'JWT token received in the password reset email'
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+          password:
+            type: string
+            description: 'New password for the user'
+            format: password
+            minLength: 6
+            maxLength: 128
+            example: 'NewSecurePassword123'
+responses:
+  '200':
+    description: Password successfully reset
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - message
+            - status
+            - data
+          properties:
+            message:
+              type: string
+              example: 'Password was successfully reset!'
+              description: 'Message indicating that the password reset was successful.'
+            status:
+              type: integer
+              example: 200
+              description: 'HTTP status code indicating success'
+            data:
+              type: object
+              example: {}
+  '401':
+    $ref: '../../../components/responses/users/401.yaml'
+  '404':
+    $ref: '../../../components/responses/users/404.yaml'
+  '500':
+    $ref: '../../../components/responses/users/500.yaml'
