@@ -3,6 +3,8 @@ tags:
 summary: Reset user's password
 operationId: resetPassword
 description: This endpoint resets the user's password using the provided reset token.
+security:
+  - bearerAuth: []
 requestBody:
   content:
     application/json:
