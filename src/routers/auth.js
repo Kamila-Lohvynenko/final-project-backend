@@ -5,7 +5,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js'
 import { getUserCurrentUserController, loginUserController, logoutUserController, refreshUserSessionController, registerUserController, updateDataUserController, getUserCountController } from '../controllers/auth.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/multer.js';
-import { requestResetEmailController, resetPasswordComtroller } from '../controllers/reset-password.js';
+import { requestResetEmailController, resetPasswordController } from '../controllers/reset-password.js';
 import { confirmOAuthController, getOAuthUrlController } from '../controllers/google-o-auth.js';
 
 const router = express.Router();
@@ -27,7 +27,7 @@ router.patch('/avatar', authenticate, upload.single('avatar'), ctrlWrapper(updat
 
 router.post('/send-reset-email', jsonParser, validateBody(requestResetEmailSchema), ctrlWrapper(requestResetEmailController));
 
-router.post('/reset-pwd', jsonParser, validateBody(resetPasswordSchema), ctrlWrapper(resetPasswordComtroller));
+router.post('/reset-pwd', jsonParser, validateBody(resetPasswordSchema), ctrlWrapper(resetPasswordController));
 
 router.get('/get-oauth-url', ctrlWrapper(getOAuthUrlController));
 
