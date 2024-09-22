@@ -16,14 +16,12 @@ export const addWater = async (userId, amount, day, month, year, time) => {
       'Invalid time format. Use "HH:mm", where hours must be between 0-23 and minutes between 0-59',
     );
   }
+
   const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-
   const inputDate = new Date(year, month - 1, day, hour, minute);
-  inputDate.setHours(0, 0, 0, 0);
 
-  if (inputDate.toDateString() !== currentDate.toDateString()) {
-    throw new Error('You can only add water for today date');
+  if (inputDate > currentDate) {
+    throw new Error('You cannot add water for a future date.');
   }
   const waterRecord = await WaterCollection.create({
     userId,

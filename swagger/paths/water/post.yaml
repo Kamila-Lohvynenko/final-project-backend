@@ -82,7 +82,7 @@ responses:
               example: 400
             message:
               type: string
-              example: 'You can only add water for today date.'
+              example: 'You cannot add water for a future date.'
   '404':
     description: 'Missing required fields.'
     content:
