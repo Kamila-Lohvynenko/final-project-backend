@@ -2,7 +2,7 @@ import { isHttpError } from 'http-errors';
 // eslint-disable-next-line no-unused-vars
 export const errorMiddleware = (err, req, res, next) => {
   if (isHttpError(err)) {
-    res.status(err.status).send({
+    res.status(err.status).json({
       status: err.status,
       message: err.message,
       validationErrors: err.errors
@@ -12,7 +12,7 @@ export const errorMiddleware = (err, req, res, next) => {
   }
   console.error(err);
 
-  res.status(500).send({
+  res.status(500).json({
     status: 500,
     message: 'Something went wrong',
     data: 'Internal serves error',
