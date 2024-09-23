@@ -17,12 +17,12 @@ export const addWater = async (userId, amount, day, month, year, time) => {
     );
   }
 
-  const currentDate = new Date();
-  const inputDate = new Date(year, month - 1, day, hour, minute);
+  // const currentDate = new Date();
+  // const inputDate = new Date(year, month - 1, day, hour, minute);
 
-  if (inputDate > currentDate) {
-    throw new Error('You cannot add water for a future date.');
-  }
+  // if (inputDate > currentDate) {
+  //   throw new Error('You cannot add water for a future date.');
+  // }
   const waterRecord = await WaterCollection.create({
     userId,
     amount,
