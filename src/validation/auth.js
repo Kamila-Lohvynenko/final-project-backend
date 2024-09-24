@@ -15,7 +15,7 @@ export const updateDataUserSchema = Joi.object({
   email: Joi.string().email(),
   gender: Joi.string().valid('woman', 'man'),
   weight: Joi.number().min(1).max(500),
-  activeSportTime: Joi.number().min(1).max(24),
+  activeSportTime: Joi.number().min(0).max(24),
   dailyNorma: Joi.number().min(1000).max(10000),
   avatar: Joi.string(),
 });
